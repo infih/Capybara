@@ -3,157 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Capybara Dance Party</title>
+    <title>Anime Capybara Dance</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent scrolling */
-            font-family: 'Open Sans', Arial, sans-serif;
-            cursor: pointer; /* Encourage clicking to start */
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #87CEEB;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: pointer;
         }
 
-        /* The Anime Jungle Background */
-        .scene-container {
-            position: fixed;
+        /* 100% Reliable Background Image with Anime Filters */
+        .anime-jungle {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            /* Direct link to an anime jungle stock illustration */
-            background-image: url('https://w0.peakpx.com/wallpaper/448/577/HD-wallpaper-rainforest-canopy-anime.jpg'); 
+            background-image: url('https://images.unsplash.com/photo-1518182170546-076616fd6237?q=80&w=2560&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            /* These filters create the vibrant anime art style */
+            filter: saturate(1.8) contrast(1.2) brightness(1.1);
+            z-index: -1;
         }
 
-        /* Click to Start Overlay */
-        #play-overlay {
-            position: absolute;
+        /* Click to Start Screen */
+        #start-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
+            color: white;
             transition: opacity 0.5s ease;
         }
 
-        /* Capybara Wrapper for Position and Roaming */
-        .capybara-wrapper {
-            position: absolute;
-            width: 250px; /* Size for anime character */
-            height: 300px;
+        #start-overlay h1 {
+            font-size: 3rem;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
+            margin-bottom: 10px;
+        }
+
+        /* Stage for the Capybaras */
+        .stage {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-bottom: 50px;
+            height: 100vh;
+            padding-bottom: 15vh;
+            gap: 150px;
+            box-sizing: border-box;
         }
 
-        /* The Capybara Image itself */
-        .capybara-anime {
+        /* Pure CSS Blue Capybara - Impossible to break or block! */
+        .capy-wrapper {
+            position: relative;
+            width: 220px;
+            height: 250px;
+            /* Roaming and swaying animation */
+            animation: sway 0.8s infinite alternate ease-in-out, roam 15s infinite alternate ease-in-out;
+        }
+
+        .capy-wrapper:nth-child(2) {
+            animation: sway 0.8s infinite alternate ease-in-out reverse, roam2 18s infinite alternate ease-in-out;
+            animation-delay: 0.4s, 0s;
+        }
+
+        .capy-body {
+            position: absolute;
+            bottom: 0;
+            left: 30px;
+            width: 160px;
+            height: 190px;
+            background: #90C3E5; /* Light blue blob color */
+            border: 6px solid #1C2833;
+            border-radius: 45% 45% 35% 35%;
+            box-shadow: inset -15px -15px 0 rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Faces */
+        .eyes {
+            margin-top: 60px;
+            width: 80px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .eye {
+            width: 14px;
+            height: 14px;
+            background: #1C2833;
+            border-radius: 50%;
+        }
+        .cheeks {
+            position: absolute;
+            top: 65px;
+            width: 110px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .cheek {
+            width: 22px;
+            height: 12px;
+            background: #FF8DA1;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        .mouth {
+            margin-top: 5px;
+            width: 24px;
+            height: 10px;
+            border-bottom: 5px solid #1C2833;
+            border-radius: 50%;
+        }
+
+        /* Personalized Shirts/Bellies */
+        .name-tag {
+            margin-top: 35px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #1C2833;
+            opacity: 0.5;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* CSS Sombrero */
+        .sombrero {
+            position: absolute;
+            top: -40px;
+            left: -10px;
+            width: 240px;
+            z-index: 2;
+        }
+        .brim {
             width: 100%;
-            height: auto;
-            /* Using a direct link for an anime style capybara image. 
-               This image should have a transparent background. */
-            content: url('https://thumbs.dreamstime.com/b/cartoon-capybara-illustration-anime-style-very-cute-small-kawaii-character-design-animal-mascot-icon-happy-cheerful-isolated-253702581.jpg');
-            display: block;
+            height: 50px;
+            background: #F4D03F;
+            border: 6px solid #1C2833;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+        }
+        .top-hat {
+            width: 100px;
+            height: 60px;
+            background: #F4D03F;
+            border: 6px solid #1C2833;
+            border-radius: 50px 50px 0 0;
+            position: absolute;
+            top: 0;
+            left: 64px;
+            border-bottom: none;
+        }
+        .band {
+            width: 100px;
+            height: 18px;
+            background: #E74C3C;
+            position: absolute;
+            top: 42px;
+            left: 64px;
+            border-left: 6px solid #1C2833;
+            border-right: 6px solid #1C2833;
         }
 
-        /* CSS Animations: The Maraca Shake and Hip Sway */
-        
-        /* 1. Swaying Dance (similar to video) */
-        @keyframes sway-dance {
-            0%, 100% { transform: rotate(0deg) translateX(0); }
-            12.5% { transform: rotate(-8deg) translateX(-15px) translateY(-5px); }
-            25% { transform: rotate(0deg) translateX(0); }
-            37.5% { transform: rotate(8deg) translateX(15px) translateY(-5px); }
-            50% { transform: rotate(0deg) translateX(0); }
-            62.5% { transform: rotate(-8deg) translateX(-15px) translateY(-5px); }
-            75% { transform: rotate(0deg) translateX(0); }
-            87.5% { transform: rotate(8deg) translateX(15px) translateY(-5px); }
+        /* Maracas using native emojis */
+        .maraca {
+            font-size: 75px;
+            position: absolute;
+            top: 90px;
+            filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.4));
+        }
+        .maraca.left {
+            left: -35px;
+            animation: shake-left 0.2s infinite alternate;
+        }
+        .maraca.right {
+            right: -35px;
+            transform: scaleX(-1);
+            animation: shake-right 0.2s infinite alternate;
         }
 
-        /* 2. Slow, continuous roaming */
-        @keyframes roam-slow {
-            0%, 100% { left: 20%; top: 60%; }
-            25% { left: 15%; top: 55%; }
-            50% { left: 25%; top: 65%; }
-            75% { left: 30%; top: 58%; }
+        /* The Dance & Roam Animations */
+        @keyframes sway {
+            0% { transform: rotate(-8deg) translateY(0); }
+            100% { transform: rotate(8deg) translateY(-20px); }
         }
-        
-        @keyframes roam2-slow {
-            0%, 100% { right: 20%; top: 65%; }
-            25% { right: 25%; top: 70%; }
-            50% { right: 15%; top: 60%; }
-            75% { right: 10%; top: 63%; }
+        @keyframes shake-left {
+            0% { transform: rotate(0deg) translateX(0); }
+            100% { transform: rotate(30deg) translateX(-8px); }
         }
-
-        /* Specific animations for Capybara 1 (Left) */
-        .c1 {
-            bottom: 100px;
-            left: 20%;
-            animation: sway-dance 4s infinite ease-in-out, roam-slow 20s infinite ease-in-out;
-            animation-delay: 0s, 0s;
+        @keyframes shake-right {
+            0% { transform: scaleX(-1) rotate(0deg) translateX(0); }
+            100% { transform: scaleX(-1) rotate(30deg) translateX(8px); }
         }
-
-        /* Specific animations for Capybara 2 (Right) */
-        .c2 {
-            bottom: 100px;
-            right: 20%;
-            animation: sway-dance 4s infinite ease-in-out reverse, roam2-slow 23s infinite ease-in-out;
-            animation-delay: 0.5s, 0s;
+        @keyframes roam {
+            0% { margin-left: -20vw; }
+            100% { margin-left: 20vw; }
         }
-
+        @keyframes roam2 {
+            0% { margin-right: -20vw; }
+            100% { margin-right: 20vw; }
+        }
     </style>
 </head>
-<body onclick="playMusicAndShow()">
+<body onclick="startParty()">
 
-    <!-- Play Overlay -->
-    <div id="play-overlay">
-        <h1 style="color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Click Anywhere to Start the Party!</h1>
+    <div id="start-overlay">
+        <h1>Click anywhere to start! 🪇</h1>
     </div>
 
-    <!-- The Entire Anime Scene -->
-    <div class="scene-container">
+    <div class="anime-jungle"></div>
+
+    <div class="stage" id="capy-stage" style="display: none;">
         
-        <!-- Anime Jungle Background Layer (part of scene-container) -->
-        
-        <!-- Capybara 1 (Left) -->
-        <div class="capybara-wrapper c1">
-            <img class="capybara-anime" src="" alt="Anime Capybara 1 with Maracas">
+        <!-- Capybara 1 -->
+        <div class="capy-wrapper">
+            <div class="sombrero">
+                <div class="top-hat"></div><div class="band"></div><div class="brim"></div>
+            </div>
+            <div class="maraca left">🪇</div>
+            <div class="capy-body">
+                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+                <div class="mouth"></div>
+                <div class="name-tag">Tanu</div>
+            </div>
+            <div class="maraca right">🪇</div>
         </div>
-        
-        <!-- Capybara 2 (Right) -->
-        <div class="capybara-wrapper c2">
-            <img class="capybara-anime" src="" alt="Anime Capybara 2 with Maracas">
+
+        <!-- Capybara 2 -->
+        <div class="capy-wrapper">
+            <div class="sombrero">
+                <div class="top-hat"></div><div class="band"></div><div class="brim"></div>
+            </div>
+            <div class="maraca left">🪇</div>
+            <div class="capy-body">
+                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
+                <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
+                <div class="mouth"></div>
+                <div class="name-tag">Arpit</div>
+            </div>
+            <div class="maraca right">🪇</div>
         </div>
 
     </div>
 
     <!-- Background Music -->
-    <!-- SoundHelix track - Using a track with acoustic pop and Latin vibe similar to the style requested -->
-    <audio id="background-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        function playMusicAndShow() {
-            var audio = document.getElementById("background-music");
-            audio.play();
-            var overlay = document.getElementById("play-overlay");
-            overlay.style.opacity = "0";
-            setTimeout(function(){
-                overlay.style.display = "none";
-            }, 500); // Small delay to match transition
+        function startParty() {
+            // Hide overlay
+            const overlay = document.getElementById('start-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('capy-stage').style.display = 'flex';
+            }, 500);
+
+            // Play music (using a reliable acoustic/upbeat track to mimic the vibe)
+            const music = document.getElementById('bg-music');
+            music.volume = 0.6;
+            music.play();
         }
     </script>
 
