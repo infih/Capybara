@@ -3,230 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You, My Love</title>
-    <!-- Importing a beautiful romantic font from Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <title>An Endless Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Reset and Base Styles */
-        body, html {
+        /* Base Reset */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body, html {
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            background: #0f0c29; /* Fallback */
+            background: linear-gradient(135deg, #240b36, #c31432);
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            background-color: #ff0844;
+            perspective: 1000px; /* Required for the 3D card tilt */
         }
 
-        /* Deep, Romantic Animated Gradient Background */
-        body {
-            background: linear-gradient(-45deg, #ff0844, #ffb199, #ff5e62, #c60055, #ff4e50);
-            background-size: 400% 400%;
-            animation: romanticGradient 12s ease infinite;
-        }
-
-        @keyframes romanticGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Continuous Floating Background Hearts */
-        .bg-hearts {
+        /* Canvas for High-Performance Particles */
+        #magicCanvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            overflow: hidden;
             z-index: 1;
+            pointer-events: none; /* Lets clicks pass through to the card */
         }
 
-        .bg-heart {
-            position: absolute;
-            bottom: -10%;
-            opacity: 0.3;
-            animation: floatUp infinite linear;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.4; }
-            80% { opacity: 0.4; }
-            100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
-        }
-
-        /* Glassmorphism Card with Pink/Red Glow */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 30px;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 40px rgba(255, 20, 80, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2);
-            padding: 4rem 3rem;
-            text-align: center;
-            color: #fff;
+        /* Interactive 3D Glass Card */
+        .card-container {
+            position: relative;
             z-index: 10;
-            max-width: 80%;
-            animation: heartbeat 2.5s infinite; /* Gentle pulsing effect */
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
         }
 
-        /* The Heartbeat Animation */
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            10% { transform: scale(1.02); }
-            20% { transform: scale(1); }
-            30% { transform: scale(1.02); }
-            40% { transform: scale(1); }
-            100% { transform: scale(1); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 4rem;
+            text-align: center;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            color: #fff;
+            max-width: 500px;
+            transform: translateZ(50px); /* Pops the card out in 3D space */
         }
 
         h1 {
-            margin: 0;
-            font-family: 'Dancing Script', cursive;
-            font-size: 4.5rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-            letter-spacing: 2px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            margin-bottom: 10px;
+            background: -webkit-linear-gradient(#ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 4px 15px rgba(255, 20, 80, 0.5);
         }
 
         p {
-            margin: 15px 0 0 0;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
             font-weight: 300;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .highlight {
-            color: #ffe6e6;
-            font-weight: 400;
+        /* Interactive Button */
+        .magic-btn {
+            background: linear-gradient(45deg, #ff0844, #ffb199);
+            border: none;
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 8, 68, 0.3);
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Interactive Particles (Trail and Burst) */
-        .particle {
-            position: absolute;
-            pointer-events: none;
-            font-size: 28px;
-            user-select: none;
-            z-index: 20;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        .magic-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(255, 8, 68, 0.5);
         }
 
-        /* Trail Animation */
-        .particle.trail {
-            animation: floatAway 1.2s ease-out forwards;
+        .magic-btn:active {
+            transform: translateY(2px);
         }
 
-        @keyframes floatAway {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(calc(-50% + var(--drift)), -100px) scale(1.5) rotate(20deg); opacity: 0; }
+        /* Hidden Love Letter */
+        .hidden-message {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 0;
+            font-style: italic;
+            color: #ffd1d1;
         }
 
-        /* Burst Animation for Clicks */
-        .particle.burst {
-            animation: explode 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
-        @keyframes explode {
-            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
-            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.8) rotate(var(--rot)); opacity: 0; }
+        .hidden-message.reveal {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 25px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Background Floating Hearts -->
-    <div class="bg-hearts" id="bgHearts"></div>
+    <canvas id="magicCanvas"></canvas>
 
-    <!-- Central Romantic Card -->
-    <div class="glass-card">
-        <h1>To the one I love ❤️</h1>
-        <p>Every beat of my heart is for you.</p>
-        <p class="highlight"><i>Move your cursor to paint with love, click for magic.</i></p>
+    <div class="card-container" id="cardContainer">
+        <div class="glass-card">
+            <h1>My Universe</h1>
+            <p>Every time you smile, a new star lights up in my sky. Move your cursor to see the magic you bring into my world.</p>
+            <button class="magic-btn" id="revealBtn">Touch My Heart</button>
+            <div class="hidden-message" id="secretMessage">
+                "You are the most beautiful thing I keep inside my heart. I love you more than words can say, and more than actions can show. Forever and always." ❤️
+            </div>
+        </div>
     </div>
 
     <script>
-        // 1. Setup Background Floating Hearts
-        const bgHeartsContainer = document.getElementById('bgHearts');
-        const bgHeartEmojis = ['🤍', '💖', '💕', '💗'];
+        /* --- 1. 3D Card Tilt Effect --- */
+        const container = document.getElementById('cardContainer');
         
-        for (let i = 0; i < 15; i++) {
-            let heart = document.createElement('div');
-            heart.className = 'bg-heart';
-            heart.innerText = bgHeartEmojis[Math.floor(Math.random() * bgHeartEmojis.length)];
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.fontSize = `${Math.random() * 30 + 20}px`;
-            heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
-            heart.style.animationDelay = `${Math.random() * 10}s`;
-            bgHeartsContainer.appendChild(heart);
+        document.addEventListener('mousemove', (e) => {
+            // Calculate mouse position relative to the center of the screen
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 40;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+            
+            // Apply 3D rotation based on mouse coordinates
+            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        // Reset card position when mouse leaves the window
+        document.addEventListener('mouseleave', () => {
+            container.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            container.style.transition = 'transform 0.5s ease';
+        });
+        document.addEventListener('mouseenter', () => {
+            container.style.transition = 'transform 0.1s ease-out';
+        });
+
+        /* --- 2. Hidden Message Reveal --- */
+        const revealBtn = document.getElementById('revealBtn');
+        const secretMessage = document.getElementById('secretMessage');
+
+        revealBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents the canvas click event from taking over entirely
+            secretMessage.classList.toggle('reveal');
+            if(secretMessage.classList.contains('reveal')) {
+                revealBtn.innerText = "I Love You";
+                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 100); // Big center explosion
+            } else {
+                revealBtn.innerText = "Touch My Heart";
+            }
+        });
+
+        /* --- 3. High-Performance Canvas Particles (Fixes Lag) --- */
+        const canvas = document.getElementById('magicCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Emojis for the particle engine
+        const emojis = ['❤️', '💖', '✨', '💕', '🌸', '🦋'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Particle Class
+        class Particle {
+            constructor(x, y, isExplosion = false) {
+                this.x = x;
+                this.y = y;
+                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                this.size = Math.random() * 20 + 15; // Random size
+                
+                if (isExplosion) {
+                    // Explosive outward movement
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 15 + 5;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                    this.gravity = 0.2; // They fall down eventually
+                    this.life = 1;
+                    this.decay = Math.random() * 0.02 + 0.01;
+                } else {
+                    // Gentle floating trail
+                    this.vx = (Math.random() - 0.5) * 2;
+                    this.vy = (Math.random() - 0.5) * 2 - 1; // Drift upward slightly
+                    this.gravity = -0.05; // Float up
+                    this.life = 1;
+                    this.decay = Math.random() * 0.03 + 0.02;
+                }
+                this.rotation = Math.random() * 360;
+                this.rotSpeed = (Math.random() - 0.5) * 10;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.vy += this.gravity;
+                this.y += this.vy;
+                this.life -= this.decay;
+                this.rotation += this.rotSpeed;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation * Math.PI / 180);
+                ctx.globalAlpha = Math.max(0, this.life); // Fade out smoothly
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(this.emoji, 0, 0);
+                ctx.restore();
+            }
         }
 
-        // 2. Setup Interactive Romantic Particles
-        const emojis = ['❤️', '💖', '💕', '💘', '💝', '🌹', '✨', '🔥'];
-
-        // Mouse Trail Logic
-        document.addEventListener('mousemove', function(e) {
-            if (Math.random() > 0.8) { 
-                const particle = document.createElement('div');
-                particle.className = 'particle trail';
-                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                particle.style.left = e.clientX + 'px';
-                particle.style.top = e.clientY + 'px';
-                
-                const drift = (Math.random() - 0.5) * 80; 
-                particle.style.setProperty('--drift', `${drift}px`);
-                
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 1200);
+        // Create particles on mouse move (Trail)
+        window.addEventListener('mousemove', (e) => {
+            // Only add occasionally to keep it elegant
+            if (Math.random() > 0.5) {
+                particles.push(new Particle(e.clientX, e.clientY, false));
             }
         });
 
-        // Click Burst Logic (Explosion of love!)
-        document.addEventListener('click', function(e) {
-            const numParticles = 20; // How many hearts burst out
-            
-            for (let i = 0; i < numParticles; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle burst';
-                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                particle.style.left = e.clientX + 'px';
-                particle.style.top = e.clientY + 'px';
-                
-                // Calculate random circular direction
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 60 + Math.random() * 120; // How far they shoot
-                const tx = Math.cos(angle) * velocity;
-                const ty = Math.sin(angle) * velocity;
-                const rot = (Math.random() - 0.5) * 180; // Random rotation
-                
-                particle.style.setProperty('--tx', `${tx}px`);
-                particle.style.setProperty('--ty', `${ty}px`);
-                particle.style.setProperty('--rot', `${rot}deg`);
-                
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 800);
+        // Create particles on click (Explosion)
+        function createExplosion(x, y, amount) {
+            for (let i = 0; i < amount; i++) {
+                particles.push(new Particle(x, y, true));
+            }
+        }
+
+        window.addEventListener('click', (e) => {
+            // Don't trigger explosion if clicking the button (handled separately)
+            if (e.target.id !== 'revealBtn') {
+                createExplosion(e.clientX, e.clientY, 30);
             }
         });
 
-        // Touch support for mobile devices
-        document.addEventListener('touchmove', function(e) {
-            if (Math.random() > 0.6) { 
-                const particle = document.createElement('div');
-                particle.className = 'particle trail';
-                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                particle.style.left = e.touches[0].clientX + 'px';
-                particle.style.top = e.touches[0].clientY + 'px';
-                particle.style.setProperty('--drift', `${(Math.random() - 0.5) * 80}px`);
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 1200);
+        // Touch support for mobile
+        window.addEventListener('touchmove', (e) => {
+            if (Math.random() > 0.3) {
+                particles.push(new Particle(e.touches[0].clientX, e.touches[0].clientY, false));
             }
         });
+
+        // Animation Loop
+        function animate() {
+            // Clear canvas with a slight transparent black to create a motion blur effect
+            ctx.clearRect(0, 0, width, height);
+
+            // Update and draw all particles
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Remove dead particles to prevent memory leaks/lag
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate(); // Start the magic loop!
     </script>
 </body>
 </html>
