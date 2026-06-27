@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For the Lovely Prapti 🍑</title>
     <!-- Importing cute and elegant fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Reset & Cursors */
+        /* Base Reset */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* We will use a custom cute cursor */
+            -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
         }
 
         body, html {
@@ -36,22 +36,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* The Custom Sparkle Cursor */
-        #cute-cursor {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 15px;
-            height: 15px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px 5px rgba(255, 143, 143, 0.8), 0 0 30px 10px rgba(255, 255, 255, 0.8);
-            transition: transform 0.1s;
-        }
-
         /* High-Performance Canvas for Interactivity */
         #canvas {
             position: absolute;
@@ -60,7 +44,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none;
+            pointer-events: none; /* Lets clicks pass through to the card */
         }
 
         /* 3D Floating Glass Card */
@@ -69,11 +53,15 @@
             z-index: 10;
             transform-style: preserve-3d;
             animation: float 4s ease-in-out infinite;
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            justify-content: center;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
         }
 
         .cute-card {
@@ -82,20 +70,20 @@
             -webkit-backdrop-filter: blur(15px);
             border: 2px solid rgba(255, 255, 255, 0.6);
             border-radius: 40px;
-            padding: 3rem 4rem;
+            padding: 3rem 2.5rem;
             text-align: center;
             box-shadow: 0 20px 50px rgba(255, 120, 120, 0.2), 
                         inset 0 0 20px rgba(255, 255, 255, 0.5);
             color: #d65a7b;
-            max-width: 500px;
             transform: translateZ(50px);
-            transition: transform 0.2s ease-out;
+            transition: transform 0.15s ease-out;
+            width: 100%;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
-            font-size: 5rem;
-            margin-bottom: 15px;
+            font-size: 4.5rem;
+            margin-bottom: 10px;
             background: linear-gradient(45deg, #ff758c, #ff7eb3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -104,9 +92,9 @@
         }
 
         p {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
             font-weight: 600;
             color: #b05c6f;
         }
@@ -116,7 +104,7 @@
             background: linear-gradient(45deg, #ff9a9e, #fecfef);
             border: none;
             padding: 15px 35px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 800;
             color: #fff;
             border-radius: 50px;
@@ -125,16 +113,12 @@
             font-family: 'Nunito', sans-serif;
             text-transform: uppercase;
             letter-spacing: 2px;
-        }
-
-        .magic-btn:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 15px 30px rgba(255, 154, 158, 0.8);
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            cursor: pointer;
         }
 
         .magic-btn:active {
-            transform: translateY(2px) scale(0.95);
+            transform: translateY(4px) scale(0.95);
+            box-shadow: 0 4px 10px rgba(255, 154, 158, 0.5);
         }
 
         /* Hidden Cute Message */
@@ -143,24 +127,28 @@
             opacity: 0;
             overflow: hidden;
             transition: all 0.8s ease-in-out;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #ff6b81;
             margin-top: 0;
         }
 
         .secret-message.reveal {
-            max-height: 200px;
+            max-height: 250px;
             opacity: 1;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
+        /* Mobile Adjustments */
+        @media (max-width: 450px) {
+            h1 { font-size: 3.5rem; }
+            .cute-card { padding: 2rem 1.5rem; border-radius: 30px; }
+            p { font-size: 1rem; }
+            .magic-btn { padding: 12px 25px; font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
-
-    <!-- Cute Glowing Cursor -->
-    <div id="cute-cursor"></div>
 
     <!-- The Interactive Physics Canvas -->
     <canvas id="canvas"></canvas>
@@ -169,8 +157,8 @@
     <div class="card-container" id="cardBox">
         <div class="cute-card" id="tiltCard">
             <h1>Prapti</h1>
-            <p>You make the world as sweet and warm as a perfect peach. Move your spark around and click for a surprise!</p>
-            <button class="magic-btn" id="btn">Click Me 🍑</button>
+            <p>You make the world as sweet and warm as a perfect peach. Tap or drag your finger for a surprise!</p>
+            <button class="magic-btn" id="btn">Touch Here 🍑</button>
             <div class="secret-message" id="msg">
                 You are absolutely beautiful inside and out, Prapti! Keep shining your lovely light everywhere you go. ✨💖
             </div>
@@ -178,58 +166,65 @@
     </div>
 
     <script>
-        /* --- 1. Cute Custom Cursor Logic --- */
-        const cursor = document.getElementById('cute-cursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        // Helper function for Haptic Feedback (Vibration)
+        function vibrate(pattern) {
+            if (navigator.vibrate) {
+                navigator.vibrate(pattern);
+            }
+        }
 
-        document.addEventListener('mousedown', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-            cursor.style.background = '#ff758c';
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.background = '#fff';
-        });
-
-        /* --- 2. 3D Card Hover Tilt --- */
-        const cardBox = document.getElementById('cardBox');
+        /* --- 1. 3D Card Hover & Touch Tilt --- */
         const tiltCard = document.getElementById('tiltCard');
         
-        document.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+        function handleTilt(x, y) {
+            let xAxis = (window.innerWidth / 2 - x) / 30;
+            let yAxis = (window.innerHeight / 2 - y) / 30;
             tiltCard.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        }
+
+        // For Desktop
+        document.addEventListener('mousemove', (e) => handleTilt(e.clientX, e.clientY));
+        
+        // For Mobile Dragging
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            handleTilt(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        // Reset tilt on release
+        document.addEventListener('touchend', () => {
+            tiltCard.style.transform = `translateZ(50px) rotateY(0deg) rotateX(0deg)`;
+        });
+        document.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = `translateZ(50px) rotateY(0deg) rotateX(0deg)`;
         });
 
-        /* --- 3. Button Interaction --- */
+        /* --- 2. Button Interaction --- */
         const btn = document.getElementById('btn');
         const msg = document.getElementById('msg');
 
+        // Works for both clicks and mobile taps
         btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Stop background click explosion from firing here
+            e.stopPropagation(); 
             msg.classList.toggle('reveal');
             
             if (msg.classList.contains('reveal')) {
                 btn.innerText = "So Beautiful! ✨";
-                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 80, true); // Big peach explosion!
+                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 80, true);
+                vibrate([50, 100, 150]); // Fun haptic pattern for the big reveal!
             } else {
-                btn.innerText = "Click Me 🍑";
+                btn.innerText = "Touch Here 🍑";
+                vibrate(30);
             }
         });
 
-        /* --- 4. Bouncy Canvas Physics Engine --- */
+        /* --- 3. Bouncy Canvas Physics Engine --- */
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
         
-        // Adorable array of items for the particles
         const cuteItems = ['🍑', '💖', '✨', '🌸', '🎀', '⭐'];
 
         function resize() {
@@ -246,25 +241,23 @@
                 this.item = cuteItems[Math.floor(Math.random() * cuteItems.length)];
                 this.size = Math.random() * 20 + 15;
                 
-                if (isSuper) this.size *= 1.5; // Bigger items for the button click
+                if (isSuper) this.size *= 1.5; 
                 
                 if (isExplosion) {
-                    // Explosive physics with gravity
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * (isSuper ? 25 : 15) + 5;
+                    const speed = Math.random() * (isSuper ? 20 : 12) + 5;
                     this.vx = Math.cos(angle) * speed;
                     this.vy = Math.sin(angle) * speed;
-                    this.gravity = 0.5; // Pulls them down
+                    this.gravity = 0.6; // Pulls them down a bit faster for mobile
                     this.life = 1;
                     this.decay = Math.random() * 0.01 + 0.005;
-                    this.bounciness = Math.random() * 0.4 + 0.4; // How bouncy they are
+                    this.bounciness = Math.random() * 0.4 + 0.4;
                 } else {
-                    // Magic trail physics (floating up)
                     this.vx = (Math.random() - 0.5) * 2;
                     this.vy = (Math.random() - 0.5) * 2 - 1;
-                    this.gravity = -0.05; // Float up
+                    this.gravity = -0.05;
                     this.life = 1;
-                    this.decay = Math.random() * 0.04 + 0.02;
+                    this.decay = Math.random() * 0.05 + 0.02; // Fade a bit faster on trail
                     this.bounciness = 0;
                 }
                 
@@ -279,11 +272,10 @@
                 this.rotation += this.rotSpeed;
                 this.life -= this.decay;
 
-                // Bounce off the bottom of the screen!
                 if (this.y > height - this.size && this.bounciness > 0) {
                     this.y = height - this.size;
-                    this.vy *= -this.bounciness; // Reverse velocity and reduce it
-                    this.vx *= 0.8; // Friction
+                    this.vy *= -this.bounciness;
+                    this.vx *= 0.8;
                 }
             }
 
@@ -300,30 +292,48 @@
             }
         }
 
-        // Add magic trail on mouse move
-        window.addEventListener('mousemove', (e) => {
-            if (Math.random() > 0.6) {
-                particles.push(new Particle(e.clientX, e.clientY, false));
-            }
-        });
-
-        // Add bouncy explosions anywhere you click
         function createExplosion(x, y, amount, isSuper = false) {
             for (let i = 0; i < amount; i++) {
                 particles.push(new Particle(x, y, true, isSuper));
             }
         }
 
-        window.addEventListener('click', (e) => {
-            if (e.target.id !== 'btn') {
-                createExplosion(e.clientX, e.clientY, 25);
+        // Add trail on mouse move (Desktop)
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.6) {
+                particles.push(new Particle(e.clientX, e.clientY, false));
             }
         });
 
+        // Add trail on finger drag (Mobile) - handles multiple fingers!
+        window.addEventListener('touchmove', (e) => {
+            for(let i = 0; i < e.touches.length; i++) {
+                if (Math.random() > 0.4) {
+                    particles.push(new Particle(e.touches[i].clientX, e.touches[i].clientY, false));
+                }
+            }
+        }, { passive: true });
+
+        // Explosions for clicks/taps on background
+        const handleBackgroundTap = (x, y, target) => {
+            if (target.id !== 'btn') {
+                createExplosion(x, y, 20);
+                vibrate(20); // Small haptic bump on tap
+            }
+        };
+
+        window.addEventListener('click', (e) => handleBackgroundTap(e.clientX, e.clientY, e.target));
+        
+        // Specific touchstart for faster response on mobile
+        window.addEventListener('touchstart', (e) => {
+            for(let i = 0; i < e.changedTouches.length; i++) {
+                handleBackgroundTap(e.changedTouches[i].clientX, e.changedTouches[i].clientY, e.target);
+            }
+        }, { passive: true });
+
         // Loop the magic
         function animate() {
-            // Semi-transparent peach clear to create soft trails
-            ctx.fillStyle = 'rgba(255, 236, 210, 0.3)';
+            ctx.fillStyle = 'rgba(255, 236, 210, 0.4)';
             ctx.fillRect(0, 0, width, height);
 
             for (let i = particles.length - 1; i >= 0; i--) {
