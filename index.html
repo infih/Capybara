@@ -3,285 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Capybara Dance</title>
+    <title>A Lovely Interactive Experience</title>
     <style>
+        /* Reset and Base Styles */
         body, html {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #87CEEB;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            cursor: pointer;
-        }
-
-        /* 100% Reliable Background Image with Anime Filters */
-        .anime-jungle {
-            position: absolute;
-            top: 0;
-            left: 0;
+            height: 100vh;
             width: 100vw;
-            height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1518182170546-076616fd6237?q=80&w=2560&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            /* These filters create the vibrant anime art style */
-            filter: saturate(1.8) contrast(1.2) brightness(1.1);
-            z-index: -1;
-        }
-
-        /* Click to Start Screen */
-        #start-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            color: white;
-            transition: opacity 0.5s ease;
-        }
-
-        #start-overlay h1 {
-            font-size: 3rem;
-            text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
-            margin-bottom: 10px;
-        }
-
-        /* Stage for the Capybaras */
-        .stage {
+            overflow: hidden; /* Prevents scrollbars from particles */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
-            height: 100vh;
-            padding-bottom: 15vh;
-            gap: 150px;
-            box-sizing: border-box;
-        }
-
-        /* Pure CSS Blue Capybara - Impossible to break or block! */
-        .capy-wrapper {
-            position: relative;
-            width: 220px;
-            height: 250px;
-            /* Roaming and swaying animation */
-            animation: sway 0.8s infinite alternate ease-in-out, roam 15s infinite alternate ease-in-out;
-        }
-
-        .capy-wrapper:nth-child(2) {
-            animation: sway 0.8s infinite alternate ease-in-out reverse, roam2 18s infinite alternate ease-in-out;
-            animation-delay: 0.4s, 0s;
-        }
-
-        .capy-body {
-            position: absolute;
-            bottom: 0;
-            left: 30px;
-            width: 160px;
-            height: 190px;
-            background: #90C3E5; /* Light blue blob color */
-            border: 6px solid #1C2833;
-            border-radius: 45% 45% 35% 35%;
-            box-shadow: inset -15px -15px 0 rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
             align-items: center;
+            cursor: pointer; /* Hints that the user can click */
         }
 
-        /* Faces */
-        .eyes {
-            margin-top: 60px;
-            width: 80px;
-            display: flex;
-            justify-content: space-between;
+        /* Animated Gradient Background */
+        body {
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
-        .eye {
-            width: 14px;
-            height: 14px;
-            background: #1C2833;
-            border-radius: 50%;
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        .cheeks {
-            position: absolute;
-            top: 65px;
-            width: 110px;
-            display: flex;
-            justify-content: space-between;
+
+        /* Glassmorphism Card Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            padding: 3rem;
+            text-align: center;
+            color: #4a4a4a;
+            z-index: 10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 80%;
         }
-        .cheek {
-            width: 22px;
-            height: 12px;
-            background: #FF8DA1;
-            border-radius: 50%;
+
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1.2rem;
             opacity: 0.8;
         }
-        .mouth {
-            margin-top: 5px;
-            width: 24px;
-            height: 10px;
-            border-bottom: 5px solid #1C2833;
-            border-radius: 50%;
+
+        /* Interactive Particles */
+        .particle {
+            position: absolute;
+            pointer-events: none; /* Lets clicks pass through to the background */
+            font-size: 24px;
+            user-select: none;
+            animation: floatAway 1.5s ease-out forwards;
         }
 
-        /* Personalized Shirts/Bellies */
-        .name-tag {
-            margin-top: 35px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #1C2833;
-            opacity: 0.5;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* CSS Sombrero */
-        .sombrero {
-            position: absolute;
-            top: -40px;
-            left: -10px;
-            width: 240px;
-            z-index: 2;
-        }
-        .brim {
-            width: 100%;
-            height: 50px;
-            background: #F4D03F;
-            border: 6px solid #1C2833;
-            border-radius: 50%;
-            position: absolute;
-            top: 40px;
-        }
-        .top-hat {
-            width: 100px;
-            height: 60px;
-            background: #F4D03F;
-            border: 6px solid #1C2833;
-            border-radius: 50px 50px 0 0;
-            position: absolute;
-            top: 0;
-            left: 64px;
-            border-bottom: none;
-        }
-        .band {
-            width: 100px;
-            height: 18px;
-            background: #E74C3C;
-            position: absolute;
-            top: 42px;
-            left: 64px;
-            border-left: 6px solid #1C2833;
-            border-right: 6px solid #1C2833;
-        }
-
-        /* Maracas using native emojis */
-        .maraca {
-            font-size: 75px;
-            position: absolute;
-            top: 90px;
-            filter: drop-shadow(2px 4px 0px rgba(0,0,0,0.4));
-        }
-        .maraca.left {
-            left: -35px;
-            animation: shake-left 0.2s infinite alternate;
-        }
-        .maraca.right {
-            right: -35px;
-            transform: scaleX(-1);
-            animation: shake-right 0.2s infinite alternate;
-        }
-
-        /* The Dance & Roam Animations */
-        @keyframes sway {
-            0% { transform: rotate(-8deg) translateY(0); }
-            100% { transform: rotate(8deg) translateY(-20px); }
-        }
-        @keyframes shake-left {
-            0% { transform: rotate(0deg) translateX(0); }
-            100% { transform: rotate(30deg) translateX(-8px); }
-        }
-        @keyframes shake-right {
-            0% { transform: scaleX(-1) rotate(0deg) translateX(0); }
-            100% { transform: scaleX(-1) rotate(30deg) translateX(8px); }
-        }
-        @keyframes roam {
-            0% { margin-left: -20vw; }
-            100% { margin-left: 20vw; }
-        }
-        @keyframes roam2 {
-            0% { margin-right: -20vw; }
-            100% { margin-right: 20vw; }
+        @keyframes floatAway {
+            0% { 
+                transform: translate(-50%, -50%) scale(0.5); 
+                opacity: 1; 
+            }
+            100% { 
+                /* var(--drift) is set by JavaScript for random left/right movement */
+                transform: translate(calc(-50% + var(--drift)), -120px) scale(1.5) rotate(20deg); 
+                opacity: 0; 
+            }
         }
     </style>
 </head>
-<body onclick="startParty()">
+<body>
 
-    <div id="start-overlay">
-        <h1>Click anywhere to start! 🪇</h1>
+    <div class="glass-card">
+        <h1>Hello, Beautiful! ✨</h1>
+        <p>Move your mouse around, and click anywhere.</p>
     </div>
-
-    <div class="anime-jungle"></div>
-
-    <div class="stage" id="capy-stage" style="display: none;">
-        
-        <!-- Capybara 1 -->
-        <div class="capy-wrapper">
-            <div class="sombrero">
-                <div class="top-hat"></div><div class="band"></div><div class="brim"></div>
-            </div>
-            <div class="maraca left">🪇</div>
-            <div class="capy-body">
-                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-                <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
-                <div class="mouth"></div>
-                <div class="name-tag">Tanu</div>
-            </div>
-            <div class="maraca right">🪇</div>
-        </div>
-
-        <!-- Capybara 2 -->
-        <div class="capy-wrapper">
-            <div class="sombrero">
-                <div class="top-hat"></div><div class="band"></div><div class="brim"></div>
-            </div>
-            <div class="maraca left">🪇</div>
-            <div class="capy-body">
-                <div class="eyes"><div class="eye"></div><div class="eye"></div></div>
-                <div class="cheeks"><div class="cheek"></div><div class="cheek"></div></div>
-                <div class="mouth"></div>
-                <div class="name-tag">Arpit</div>
-            </div>
-            <div class="maraca right">🪇</div>
-        </div>
-
-    </div>
-
-    <!-- Background Music -->
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" type="audio/mpeg">
-    </audio>
 
     <script>
-        function startParty() {
-            // Hide overlay
-            const overlay = document.getElementById('start-overlay');
-            overlay.style.opacity = '0';
+        // Array of lovely emojis to use as particles
+        const emojis = ['💖', '✨', '🌸', '🦋', '💫', '🌷'];
+
+        // Function to create a single particle
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Pick a random emoji
+            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // Set starting position to the mouse coordinates
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            
+            // Give it a random horizontal drift for a natural floating effect
+            const drift = (Math.random() - 0.5) * 100; // Random number between -50 and 50
+            particle.style.setProperty('--drift', `${drift}px`);
+            
+            document.body.appendChild(particle);
+
+            // Remove the particle from the HTML after the CSS animation finishes (1500ms)
             setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('capy-stage').style.display = 'flex';
-            }, 500);
-
-            // Play music (using a reliable acoustic/upbeat track to mimic the vibe)
-            const music = document.getElementById('bg-music');
-            music.volume = 0.6;
-            music.play();
+                particle.remove();
+            }, 1500);
         }
-    </script>
 
+        // Mouse move event: leaves a trail of magic!
+        document.addEventListener('mousemove', function(e) {
+            // Only trigger 15% of the time to prevent lagging and overcrowding
+            if (Math.random() > 0.85) { 
+                createParticle(e.clientX, e.clientY);
+            }
+        });
+
+        // Click event: creates a little burst of magic!
+        document.addEventListener('click', function(e) {
+            // Create 6 particles rapidly
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => {
+                    createParticle(e.clientX, e.clientY);
+                }, i * 40); // Stagger them slightly
+            }
+        });
+
+        // Touch support for mobile devices
+        document.addEventListener('touchmove', function(e) {
+            if (Math.random() > 0.7) { 
+                createParticle(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        });
+    </script>
 </body>
 </html>
