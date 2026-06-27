@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An Endless Love</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>For Prapti 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Base Reset */
+        /* Base Reset & Typography */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            cursor: none; /* Hides default cursor for our custom glowing one */
         }
 
         body, html {
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
-            background: #0f0c29; /* Fallback */
-            background: linear-gradient(135deg, #240b36, #c31432);
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(-45deg, #1a0b2e, #4b1d52, #852d6a, #4a154b);
+            background-size: 400% 400%;
+            animation: gradientTwilight 15s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
-            perspective: 1000px; /* Required for the 3D card tilt */
+            perspective: 1200px;
         }
 
-        /* Canvas for High-Performance Particles */
+        @keyframes gradientTwilight {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* High-Performance Interactive Canvas */
         #magicCanvas {
             position: absolute;
             top: 0;
@@ -34,72 +42,100 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none; /* Lets clicks pass through to the card */
+            pointer-events: none;
         }
 
-        /* Interactive 3D Glass Card */
+        /* Custom Glowing Cursor */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,182,193,0.5) 50%, rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            box-shadow: 0 0 15px 5px rgba(255, 182, 193, 0.6);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* Interactive 3D Crystal Card */
         .card-container {
             position: relative;
             z-index: 10;
             transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            padding: 4rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 30px;
+            padding: 4rem 3rem;
             text-align: center;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 
+                        inset 0 0 20px rgba(255, 255, 255, 0.2),
+                        0 0 40px rgba(255, 154, 158, 0.3);
             color: #fff;
-            max-width: 500px;
-            transform: translateZ(50px); /* Pops the card out in 3D space */
+            max-width: 550px;
+            transform: translateZ(60px);
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 154, 158, 0.2); }
+            50% { box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.4), 0 0 60px rgba(255, 154, 158, 0.6); }
         }
 
         h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
-            margin-bottom: 10px;
-            background: -webkit-linear-gradient(#ff9a9e, #fecfef);
+            font-family: 'Alex Brush', cursive;
+            font-size: 6rem;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 4px 15px rgba(255, 20, 80, 0.5);
+            text-shadow: 2px 2px 20px rgba(238, 156, 167, 0.5);
+            letter-spacing: 2px;
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-weight: 300;
+            color: #fce8eb;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         /* Interactive Button */
         .magic-btn {
-            background: linear-gradient(45deg, #ff0844, #ffb199);
+            background: linear-gradient(45deg, #ee9ca7, #ffdde1);
             border: none;
-            padding: 15px 35px;
+            padding: 16px 40px;
             font-size: 1.2rem;
             font-weight: 600;
-            color: white;
+            color: #4a154b;
             border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 8, 68, 0.3);
-            transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-            overflow: hidden;
+            cursor: none; /* Keeps custom cursor active */
+            box-shadow: 0 10px 25px rgba(238, 156, 167, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 1px;
         }
 
         .magic-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 25px rgba(255, 8, 68, 0.5);
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 15px 35px rgba(238, 156, 167, 0.7);
+            background: linear-gradient(45deg, #ffdde1, #ffffff);
         }
 
         .magic-btn:active {
-            transform: translateY(2px);
+            transform: translateY(2px) scale(0.95);
         }
 
         /* Hidden Love Letter */
@@ -107,115 +143,159 @@
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             margin-top: 0;
+            font-size: 1.15rem;
             font-style: italic;
-            color: #ffd1d1;
+            color: #ffffff;
+            font-weight: 400;
         }
 
         .hidden-message.reveal {
-            max-height: 200px;
+            max-height: 250px;
             opacity: 1;
-            margin-top: 25px;
+            margin-top: 30px;
+        }
+
+        .highlight {
+            color: #ffb6c1;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- High Performance Particle Canvas -->
     <canvas id="magicCanvas"></canvas>
 
+    <!-- 3D Interactive Card -->
     <div class="card-container" id="cardContainer">
         <div class="glass-card">
-            <h1>My Universe</h1>
-            <p>Every time you smile, a new star lights up in my sky. Move your cursor to see the magic you bring into my world.</p>
-            <button class="magic-btn" id="revealBtn">Touch My Heart</button>
+            <h1>Prapti</h1>
+            <p>You carry a magic that makes the whole world soft and beautiful. Move the stars, and see what blooms.</p>
+            <button class="magic-btn" id="revealBtn">Touch the Magic</button>
             <div class="hidden-message" id="secretMessage">
-                "You are the most beautiful thing I keep inside my heart. I love you more than words can say, and more than actions can show. Forever and always." ❤️
+                "Dear <span class="highlight">Prapti</span>, your spirit is like a gentle dawn. Beautiful, breathtaking, and endlessly full of light. Never stop shining your magnificent colors into this world." ✨💖
             </div>
         </div>
     </div>
 
     <script>
-        /* --- 1. 3D Card Tilt Effect --- */
-        const container = document.getElementById('cardContainer');
+        /* --- 1. Custom Glowing Cursor --- */
+        const cursor = document.getElementById('custom-cursor');
         
         document.addEventListener('mousemove', (e) => {
-            // Calculate mouse position relative to the center of the screen
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-            
-            // Apply 3D rotation based on mouse coordinates
-            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        // Reset card position when mouse leaves the window
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursor.style.background = 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,215,0,0.6) 50%, rgba(255,255,255,0) 100%)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor.style.background = 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,182,193,0.5) 50%, rgba(255,255,255,0) 100%)';
+        });
+
+        /* --- 2. Fluid 3D Card Tilt Effect --- */
+        const container = document.getElementById('cardContainer');
+        const card = document.querySelector('.glass-card');
+        
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+            container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            
+            // Add a subtle dynamic glare to the card
+            let glareX = (e.clientX / window.innerWidth) * 100;
+            let glareY = (e.clientY / window.innerHeight) * 100;
+            card.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.15), rgba(255,255,255,0.05))`;
+        });
+
         document.addEventListener('mouseleave', () => {
             container.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            container.style.transition = 'transform 0.5s ease';
-        });
-        document.addEventListener('mouseenter', () => {
-            container.style.transition = 'transform 0.1s ease-out';
+            card.style.background = `rgba(255, 255, 255, 0.08)`;
         });
 
-        /* --- 2. Hidden Message Reveal --- */
+        /* --- 3. Hidden Message Reveal --- */
         const revealBtn = document.getElementById('revealBtn');
         const secretMessage = document.getElementById('secretMessage');
 
         revealBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents the canvas click event from taking over entirely
+            e.stopPropagation(); 
             secretMessage.classList.toggle('reveal');
             if(secretMessage.classList.contains('reveal')) {
-                revealBtn.innerText = "I Love You";
-                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 100); // Big center explosion
+                revealBtn.innerText = "For You, Prapti ✨";
+                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 150); // Massive beautiful burst
             } else {
-                revealBtn.innerText = "Touch My Heart";
+                revealBtn.innerText = "Touch the Magic";
             }
         });
 
-        /* --- 3. High-Performance Canvas Particles (Fixes Lag) --- */
+        /* --- 4. High-Performance Canvas Particles (Dust, Stars, and Hearts) --- */
         const canvas = document.getElementById('magicCanvas');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
-        
-        // Emojis for the particle engine
-        const emojis = ['❤️', '💖', '✨', '💕', '🌸', '🦋'];
+        let backgroundStars = [];
 
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
+            initBackgroundStars();
         }
         window.addEventListener('resize', resize);
+
+        // Pre-fill background with slow-moving glowing orbs
+        function initBackgroundStars() {
+            backgroundStars = [];
+            for (let i = 0; i < 60; i++) {
+                backgroundStars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 2 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    alpha: Math.random(),
+                    pulse: (Math.random() * 0.02) + 0.005
+                });
+            }
+        }
         resize();
 
-        // Particle Class
+        // Particle System for Clicks and Trails
+        const colors = ['#ffdde1', '#ee9ca7', '#ffffff', '#ffb6c1', '#ffd700'];
+
         class Particle {
             constructor(x, y, isExplosion = false) {
                 this.x = x;
                 this.y = y;
-                this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                this.size = Math.random() * 20 + 15; // Random size
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.isHeart = Math.random() > 0.7; // 30% chance to be a drawn heart, otherwise glowing dust
                 
                 if (isExplosion) {
-                    // Explosive outward movement
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * 15 + 5;
+                    const speed = Math.random() * 18 + 2;
                     this.vx = Math.cos(angle) * speed;
                     this.vy = Math.sin(angle) * speed;
-                    this.gravity = 0.2; // They fall down eventually
+                    this.gravity = 0.15;
                     this.life = 1;
-                    this.decay = Math.random() * 0.02 + 0.01;
+                    this.decay = Math.random() * 0.015 + 0.005;
+                    this.size = Math.random() * 8 + 4;
                 } else {
-                    // Gentle floating trail
-                    this.vx = (Math.random() - 0.5) * 2;
-                    this.vy = (Math.random() - 0.5) * 2 - 1; // Drift upward slightly
-                    this.gravity = -0.05; // Float up
+                    this.vx = (Math.random() - 0.5) * 1.5;
+                    this.vy = (Math.random() - 0.5) * 1.5 - 0.5; // Float upwards
+                    this.gravity = -0.02;
                     this.life = 1;
-                    this.decay = Math.random() * 0.03 + 0.02;
+                    this.decay = Math.random() * 0.03 + 0.01;
+                    this.size = Math.random() * 5 + 2;
                 }
-                this.rotation = Math.random() * 360;
-                this.rotSpeed = (Math.random() - 0.5) * 10;
             }
 
             update() {
@@ -223,31 +303,45 @@
                 this.vy += this.gravity;
                 this.y += this.vy;
                 this.life -= this.decay;
-                this.rotation += this.rotSpeed;
             }
 
             draw() {
                 ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.globalAlpha = Math.max(0, this.life); // Fade out smoothly
-                ctx.font = `${this.size}px Arial`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(this.emoji, 0, 0);
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                
+                // Add a glow effect
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+
+                if (this.isHeart) {
+                    // Draw a tiny HTML5 Canvas Heart
+                    ctx.translate(this.x, this.y);
+                    const scale = this.size / 5;
+                    ctx.scale(scale, scale);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-2.5, -2.5, -5, 0, 0, 4);
+                    ctx.bezierCurveTo(5, 0, 2.5, -2.5, 0, 0);
+                    ctx.fill();
+                } else {
+                    // Draw glowing circle dust
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
                 ctx.restore();
             }
         }
 
-        // Create particles on mouse move (Trail)
+        // Add trail particles on mouse move
         window.addEventListener('mousemove', (e) => {
-            // Only add occasionally to keep it elegant
-            if (Math.random() > 0.5) {
+            if (Math.random() > 0.4) {
                 particles.push(new Particle(e.clientX, e.clientY, false));
             }
         });
 
-        // Create particles on click (Explosion)
+        // Add explosion particles on click
         function createExplosion(x, y, amount) {
             for (let i = 0; i < amount; i++) {
                 particles.push(new Particle(x, y, true));
@@ -255,30 +349,49 @@
         }
 
         window.addEventListener('click', (e) => {
-            // Don't trigger explosion if clicking the button (handled separately)
             if (e.target.id !== 'revealBtn') {
-                createExplosion(e.clientX, e.clientY, 30);
-            }
-        });
-
-        // Touch support for mobile
-        window.addEventListener('touchmove', (e) => {
-            if (Math.random() > 0.3) {
-                particles.push(new Particle(e.touches[0].clientX, e.touches[0].clientY, false));
+                createExplosion(e.clientX, e.clientY, 40);
+                
+                // Ripple effect on click
+                cursor.style.transform = 'translate(-50%, -50%) scale(4)';
+                cursor.style.opacity = '0';
+                setTimeout(() => {
+                    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                    cursor.style.opacity = '1';
+                }, 200);
             }
         });
 
         // Animation Loop
         function animate() {
-            // Clear canvas with a slight transparent black to create a motion blur effect
-            ctx.clearRect(0, 0, width, height);
+            // Clear with slight opacity for motion blur trail
+            ctx.fillStyle = 'rgba(26, 11, 46, 0.2)'; 
+            ctx.fillRect(0, 0, width, height);
 
-            // Update and draw all particles
+            // Draw and update slow background stars
+            backgroundStars.forEach(star => {
+                star.alpha += star.pulse;
+                if(star.alpha >= 1 || star.alpha <= 0.1) star.pulse *= -1; // Pulsing effect
+                star.x += star.vx;
+                star.y += star.vy;
+                
+                // Wrap around screen
+                if(star.x < 0) star.x = width;
+                if(star.x > width) star.x = 0;
+                if(star.y < 0) star.y = height;
+                if(star.y > height) star.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+                ctx.fill();
+            });
+
+            // Update and draw interactive particles
             for (let i = particles.length - 1; i >= 0; i--) {
                 particles[i].update();
                 particles[i].draw();
                 
-                // Remove dead particles to prevent memory leaks/lag
                 if (particles[i].life <= 0) {
                     particles.splice(i, 1);
                 }
@@ -287,7 +400,7 @@
             requestAnimationFrame(animate);
         }
 
-        animate(); // Start the magic loop!
+        animate(); // Ignite the magic!
     </script>
 </body>
 </html>
