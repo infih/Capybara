@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Lovely Interactive Experience</title>
+    <title>For You, My Love</title>
+    <!-- Importing a beautiful romantic font from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
         /* Reset and Base Styles */
         body, html {
@@ -11,139 +13,218 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
-            overflow: hidden; /* Prevents scrollbars from particles */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer; /* Hints that the user can click */
+            cursor: pointer;
+            background-color: #ff0844;
         }
 
-        /* Animated Gradient Background */
+        /* Deep, Romantic Animated Gradient Background */
         body {
-            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background: linear-gradient(-45deg, #ff0844, #ffb199, #ff5e62, #c60055, #ff4e50);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: romanticGradient 12s ease infinite;
         }
 
-        @keyframes gradientBG {
+        @keyframes romanticGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Glassmorphism Card Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            padding: 3rem;
-            text-align: center;
-            color: #4a4a4a;
-            z-index: 10;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            max-width: 80%;
+        /* Continuous Floating Background Hearts */
+        .bg-hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.25);
+        .bg-heart {
+            position: absolute;
+            bottom: -10%;
+            opacity: 0.3;
+            animation: floatUp infinite linear;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Card with Pink/Red Glow */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 40px rgba(255, 20, 80, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.2);
+            padding: 4rem 3rem;
+            text-align: center;
+            color: #fff;
+            z-index: 10;
+            max-width: 80%;
+            animation: heartbeat 2.5s infinite; /* Gentle pulsing effect */
+        }
+
+        /* The Heartbeat Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            10% { transform: scale(1.02); }
+            20% { transform: scale(1); }
+            30% { transform: scale(1.02); }
+            40% { transform: scale(1); }
+            100% { transform: scale(1); }
         }
 
         h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.5rem;
-            color: #333;
+            margin: 0;
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
         }
 
         p {
-            margin: 0;
-            font-size: 1.2rem;
-            opacity: 0.8;
+            margin: 15px 0 0 0;
+            font-size: 1.3rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Interactive Particles */
+        .highlight {
+            color: #ffe6e6;
+            font-weight: 400;
+        }
+
+        /* Interactive Particles (Trail and Burst) */
         .particle {
             position: absolute;
-            pointer-events: none; /* Lets clicks pass through to the background */
-            font-size: 24px;
+            pointer-events: none;
+            font-size: 28px;
             user-select: none;
-            animation: floatAway 1.5s ease-out forwards;
+            z-index: 20;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        /* Trail Animation */
+        .particle.trail {
+            animation: floatAway 1.2s ease-out forwards;
         }
 
         @keyframes floatAway {
-            0% { 
-                transform: translate(-50%, -50%) scale(0.5); 
-                opacity: 1; 
-            }
-            100% { 
-                /* var(--drift) is set by JavaScript for random left/right movement */
-                transform: translate(calc(-50% + var(--drift)), -120px) scale(1.5) rotate(20deg); 
-                opacity: 0; 
-            }
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--drift)), -100px) scale(1.5) rotate(20deg); opacity: 0; }
+        }
+
+        /* Burst Animation for Clicks */
+        .particle.burst {
+            animation: explode 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes explode {
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.8) rotate(var(--rot)); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Background Floating Hearts -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <!-- Central Romantic Card -->
     <div class="glass-card">
-        <h1>Hello, Beautiful! ✨</h1>
-        <p>Move your mouse around, and click anywhere.</p>
+        <h1>To the one I love ❤️</h1>
+        <p>Every beat of my heart is for you.</p>
+        <p class="highlight"><i>Move your cursor to paint with love, click for magic.</i></p>
     </div>
 
     <script>
-        // Array of lovely emojis to use as particles
-        const emojis = ['💖', '✨', '🌸', '🦋', '💫', '🌷'];
-
-        // Function to create a single particle
-        function createParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Pick a random emoji
-            particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            
-            // Set starting position to the mouse coordinates
-            particle.style.left = x + 'px';
-            particle.style.top = y + 'px';
-            
-            // Give it a random horizontal drift for a natural floating effect
-            const drift = (Math.random() - 0.5) * 100; // Random number between -50 and 50
-            particle.style.setProperty('--drift', `${drift}px`);
-            
-            document.body.appendChild(particle);
-
-            // Remove the particle from the HTML after the CSS animation finishes (1500ms)
-            setTimeout(() => {
-                particle.remove();
-            }, 1500);
+        // 1. Setup Background Floating Hearts
+        const bgHeartsContainer = document.getElementById('bgHearts');
+        const bgHeartEmojis = ['🤍', '💖', '💕', '💗'];
+        
+        for (let i = 0; i < 15; i++) {
+            let heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerText = bgHeartEmojis[Math.floor(Math.random() * bgHeartEmojis.length)];
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.fontSize = `${Math.random() * 30 + 20}px`;
+            heart.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            heart.style.animationDelay = `${Math.random() * 10}s`;
+            bgHeartsContainer.appendChild(heart);
         }
 
-        // Mouse move event: leaves a trail of magic!
+        // 2. Setup Interactive Romantic Particles
+        const emojis = ['❤️', '💖', '💕', '💘', '💝', '🌹', '✨', '🔥'];
+
+        // Mouse Trail Logic
         document.addEventListener('mousemove', function(e) {
-            // Only trigger 15% of the time to prevent lagging and overcrowding
-            if (Math.random() > 0.85) { 
-                createParticle(e.clientX, e.clientY);
+            if (Math.random() > 0.8) { 
+                const particle = document.createElement('div');
+                particle.className = 'particle trail';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = e.clientX + 'px';
+                particle.style.top = e.clientY + 'px';
+                
+                const drift = (Math.random() - 0.5) * 80; 
+                particle.style.setProperty('--drift', `${drift}px`);
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1200);
             }
         });
 
-        // Click event: creates a little burst of magic!
+        // Click Burst Logic (Explosion of love!)
         document.addEventListener('click', function(e) {
-            // Create 6 particles rapidly
-            for (let i = 0; i < 6; i++) {
-                setTimeout(() => {
-                    createParticle(e.clientX, e.clientY);
-                }, i * 40); // Stagger them slightly
+            const numParticles = 20; // How many hearts burst out
+            
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle burst';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = e.clientX + 'px';
+                particle.style.top = e.clientY + 'px';
+                
+                // Calculate random circular direction
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 60 + Math.random() * 120; // How far they shoot
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                const rot = (Math.random() - 0.5) * 180; // Random rotation
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.setProperty('--rot', `${rot}deg`);
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
             }
         });
 
         // Touch support for mobile devices
         document.addEventListener('touchmove', function(e) {
-            if (Math.random() > 0.7) { 
-                createParticle(e.touches[0].clientX, e.touches[0].clientY);
+            if (Math.random() > 0.6) { 
+                const particle = document.createElement('div');
+                particle.className = 'particle trail';
+                particle.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                particle.style.left = e.touches[0].clientX + 'px';
+                particle.style.top = e.touches[0].clientY + 'px';
+                particle.style.setProperty('--drift', `${(Math.random() - 0.5) * 80}px`);
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1200);
             }
         });
     </script>
