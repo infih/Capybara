@@ -1,353 +1,1060 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For the Lovely Prapti 🍑</title>
-    <!-- Importing cute and elegant fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        /* Base Reset */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent; /* Removes blue tap highlight on mobile */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capybara Dance Party 🌿</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
 
-        body, html {
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            font-family: 'Nunito', sans-serif;
-            /* Gorgeous Animated Peach Gradient */
-            background: linear-gradient(-45deg, #ffc3a0, #ffafbd, #ffc3a0, #ffecd2);
-            background-size: 400% 400%;
-            animation: peachyBreeze 12s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes peachyBreeze {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+  :root {
+    --lime: #a8e063;
+    --teal: #38b2ac;
+    --pink: #f472b6;
+    --yellow: #fde68a;
+    --brown: #92400e;
+    --sky: #7dd3fc;
+    --dark: #064e3b;
+  }
 
-        /* High-Performance Canvas for Interactivity */
-        #canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none; /* Lets clicks pass through to the card */
-        }
+  body {
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: #0a2a1a;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='24' font-size='24'%3E🌿%3C/text%3E%3C/svg%3E") 16 16, auto;
+  }
 
-        /* 3D Floating Glass Card */
-        .card-container {
-            position: relative;
-            z-index: 10;
-            transform-style: preserve-3d;
-            animation: float 4s ease-in-out infinite;
-            width: 90%;
-            max-width: 500px;
-            display: flex;
-            justify-content: center;
-        }
+  /* ───── SCENE ───── */
+  #scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
-        }
+  /* SKY GRADIENT */
+  #sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #0b1a2e 0%,
+      #0d3348 30%,
+      #0e5444 60%,
+      #0a3d2e 100%);
+    transition: background 2s;
+  }
+  #sky.party {
+    background: linear-gradient(180deg,
+      #1a0a2e 0%,
+      #2d1054 30%,
+      #1a4030 60%,
+      #0a2e1a 100%);
+    animation: skyPulse 2s infinite alternate;
+  }
+  @keyframes skyPulse {
+    to { filter: hue-rotate(40deg) brightness(1.15); }
+  }
 
-        .cute-card {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 40px;
-            padding: 3rem 2.5rem;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(255, 120, 120, 0.2), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.5);
-            color: #d65a7b;
-            transform: translateZ(50px);
-            transition: transform 0.15s ease-out;
-            width: 100%;
-        }
+  /* STARS */
+  #stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d) infinite alternate;
+    opacity: 0.7;
+  }
+  @keyframes twinkle {
+    to { opacity: 0.1; transform: scale(0.5); }
+  }
 
-        h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 4.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 3px 3px 10px rgba(255, 117, 140, 0.3);
-            line-height: 1.2;
-        }
+  /* MOON */
+  #moon {
+    position: absolute;
+    top: 40px; right: 100px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 40%, #fde68a, #f59e0b);
+    box-shadow: 0 0 30px 10px rgba(253,230,138,.35);
+    animation: moonGlow 3s infinite alternate;
+  }
+  @keyframes moonGlow {
+    to { box-shadow: 0 0 50px 20px rgba(253,230,138,.55); }
+  }
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: #b05c6f;
-        }
+  /* JUNGLE LAYERS */
+  #jungle-far {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 65%;
+    overflow: hidden;
+  }
+  #jungle-mid {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    overflow: hidden;
+  }
+  #jungle-near {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 28%;
+    overflow: hidden;
+  }
 
-        /* Interactive Cute Button */
-        .magic-btn {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #fff;
-            border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.5);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-family: 'Nunito', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-        }
+  /* GROUND */
+  #ground {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(180deg, #1a5c35 0%, #0d3d22 60%, #071f11 100%);
+    border-radius: 60% 60% 0 0 / 20% 20% 0 0;
+  }
+  #ground::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: -5%; right: -5%;
+    height: 30px;
+    background: #22704a;
+    border-radius: 50%;
+    filter: blur(2px);
+  }
 
-        .magic-btn:active {
-            transform: translateY(4px) scale(0.95);
-            box-shadow: 0 4px 10px rgba(255, 154, 158, 0.5);
-        }
+  /* FIREFLIES */
+  .firefly {
+    position: absolute;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #a8e063;
+    box-shadow: 0 0 8px 4px rgba(168,224,99,.6);
+    animation: flyMove var(--fd) infinite var(--fd2);
+    opacity: 0;
+  }
+  @keyframes flyMove {
+    0%   { transform: translate(0,0);   opacity:0; }
+    20%  { opacity: 1; }
+    50%  { transform: translate(var(--fx),var(--fy)); opacity:0.8; }
+    80%  { opacity: 1; }
+    100% { transform: translate(var(--fx2),var(--fy2)); opacity:0; }
+  }
 
-        /* Hidden Cute Message */
-        .secret-message {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            transition: all 0.8s ease-in-out;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #ff6b81;
-            margin-top: 0;
-        }
+  /* DISCO LIGHTS */
+  .disco {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  .disco.active { opacity: 1; }
+  .disco-ray {
+    position: absolute;
+    top: -50%;
+    width: 3px;
+    height: 80vh;
+    transform-origin: top center;
+    border-radius: 2px;
+    opacity: 0.18;
+    animation: raySwing var(--rs) infinite alternate ease-in-out;
+  }
+  @keyframes raySwing {
+    to { transform: rotate(var(--ra)); }
+  }
 
-        .secret-message.reveal {
-            max-height: 250px;
-            opacity: 1;
-            margin-top: 20px;
-        }
+  /* SPARKLE PARTICLES */
+  .sparkle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 20px;
+    animation: sparkleUp 1.2s forwards;
+    z-index: 20;
+  }
+  @keyframes sparkleUp {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) scale(0); opacity: 0; }
+  }
 
-        /* Mobile Adjustments */
-        @media (max-width: 450px) {
-            h1 { font-size: 3.5rem; }
-            .cute-card { padding: 2rem 1.5rem; border-radius: 30px; }
-            p { font-size: 1rem; }
-            .magic-btn { padding: 12px 25px; font-size: 1rem; }
-        }
-    </style>
+  /* MUSIC NOTES */
+  .note {
+    position: absolute;
+    font-size: 22px;
+    animation: noteFloat 2.5s forwards;
+    pointer-events: none;
+    z-index: 20;
+  }
+  @keyframes noteFloat {
+    0%   { transform: translate(0,0) rotate(0deg); opacity:1; }
+    100% { transform: translate(var(--nx),calc(var(--ny) - 150px)) rotate(var(--nr)); opacity:0; }
+  }
+
+  /* ───── CAPYBARAS ───── */
+  #dance-floor {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    align-items: flex-end;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1.5s;
+  }
+  #dance-floor.show { opacity: 1; }
+
+  .capy-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,.5));
+  }
+  .capy-label {
+    font-family: 'Bangers', cursive;
+    font-size: 14px;
+    color: var(--yellow);
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(253,230,138,.7);
+    opacity: 0;
+    transition: opacity 0.5s;
+    margin-bottom: 2px;
+  }
+  #dance-floor.show .capy-label { opacity: 1; }
+
+  /* SVG capybara sizes */
+  .capy-wrap:nth-child(1) svg { width: 110px; }
+  .capy-wrap:nth-child(2) svg { width: 130px; }
+  .capy-wrap:nth-child(3) svg { width: 110px; }
+
+  /* DANCE ANIMATIONS */
+  .capy-wrap:nth-child(1) { animation: dance1 0.6s infinite alternate ease-in-out; }
+  .capy-wrap:nth-child(2) { animation: dance2 0.5s infinite alternate ease-in-out 0.1s; }
+  .capy-wrap:nth-child(3) { animation: dance3 0.65s infinite alternate ease-in-out 0.2s; }
+
+  @keyframes dance1 {
+    0%   { transform: translateY(0) rotate(-4deg) scaleX(1); }
+    100% { transform: translateY(-18px) rotate(4deg) scaleX(-1); }
+  }
+  @keyframes dance2 {
+    0%   { transform: translateY(-6px) scale(1.05) rotate(2deg); }
+    100% { transform: translateY(6px) scale(0.95) rotate(-2deg); }
+  }
+  @keyframes dance3 {
+    0%   { transform: translateY(0) rotate(5deg); }
+    100% { transform: translateY(-22px) rotate(-5deg); }
+  }
+
+  /* pause when music not playing */
+  .capy-wrap { animation-play-state: paused; }
+  #dance-floor.dancing .capy-wrap { animation-play-state: running; }
+
+  /* ───── PLAY BUTTON ───── */
+  #play-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    gap: 24px;
+    transition: opacity 0.8s;
+  }
+  #play-screen.hidden { opacity: 0; pointer-events: none; }
+
+  .title-text {
+    font-family: 'Bangers', cursive;
+    font-size: clamp(2.2rem, 6vw, 4.5rem);
+    color: var(--yellow);
+    text-shadow: 0 0 20px rgba(253,230,138,.6), 3px 3px 0 #92400e;
+    letter-spacing: 3px;
+    text-align: center;
+    padding: 0 20px;
+    animation: titlePulse 2s infinite alternate;
+  }
+  @keyframes titlePulse {
+    to { text-shadow: 0 0 40px rgba(253,230,138,.9), 3px 3px 0 #92400e; }
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--lime);
+    text-shadow: 0 0 10px rgba(168,224,99,.5);
+    letter-spacing: 2px;
+    text-align: center;
+    animation: subtitleFade 2s infinite alternate;
+  }
+  @keyframes subtitleFade {
+    to { opacity: 0.6; }
+  }
+
+  #play-btn {
+    width: clamp(100px,18vw,150px);
+    height: clamp(100px,18vw,150px);
+    border-radius: 50%;
+    border: none;
+    background: radial-gradient(circle at 40% 35%, #fde68a, #f59e0b 60%, #b45309);
+    box-shadow: 0 0 0 8px rgba(253,230,138,.2),
+                0 0 40px 10px rgba(253,230,138,.3),
+                0 8px 30px rgba(0,0,0,.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2.5rem,5vw,4rem);
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: btnPulse 1.5s infinite alternate;
+    position: relative;
+    overflow: visible;
+  }
+  @keyframes btnPulse {
+    to {
+      box-shadow: 0 0 0 18px rgba(253,230,138,.08),
+                  0 0 70px 20px rgba(253,230,138,.4),
+                  0 8px 30px rgba(0,0,0,.5);
+    }
+  }
+  #play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 22px rgba(253,230,138,.15),
+                0 0 80px 25px rgba(253,230,138,.5),
+                0 12px 40px rgba(0,0,0,.6);
+  }
+  #play-btn:active { transform: scale(0.95); }
+  #play-btn::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 2px dashed rgba(253,230,138,.4);
+    animation: rotateBorder 8s linear infinite;
+  }
+  @keyframes rotateBorder {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ───── NOW PLAYING BAR ───── */
+  #now-playing {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168,224,99,.25);
+    border-radius: 50px;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 13px;
+    z-index: 30;
+    opacity: 0;
+    transition: opacity 1s;
+    white-space: nowrap;
+  }
+  #now-playing.show { opacity: 1; }
+  .np-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--lime);
+    animation: npPulse 1s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes npPulse {
+    0%,100% { transform: scale(1); opacity:1; }
+    50%  { transform: scale(1.5); opacity:0.6; }
+  }
+  .np-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 16px;
+  }
+  .np-bar {
+    width: 3px;
+    background: var(--lime);
+    border-radius: 2px;
+    animation: barBounce var(--bb) infinite alternate;
+  }
+  @keyframes barBounce {
+    to { height: var(--bh); }
+  }
+
+  /* ───── CONTROLS ───── */
+  #controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 10px;
+    z-index: 30;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  #controls.show { opacity: 1; }
+  .ctrl-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(168,224,99,.3);
+    color: var(--lime);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .ctrl-btn:hover { background: rgba(168,224,99,.2); transform: scale(1.1); }
+
+  /* ───── CLICK RIPPLE ───── */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(168,224,99,.3);
+    animation: rippleOut 0.6s forwards;
+    pointer-events: none;
+    z-index: 20;
+    transform: translate(-50%,-50%);
+  }
+  @keyframes rippleOut {
+    to { transform: translate(-50%,-50%) scale(5); opacity: 0; }
+  }
+
+  /* ───── SCORE BADGE ───── */
+  #score-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(0,0,0,.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(253,230,138,.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: var(--yellow);
+    font-family: 'Bangers', cursive;
+    font-size: 18px;
+    letter-spacing: 1px;
+    z-index: 30;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  #score-badge.show { opacity: 1; }
+
+  /* ───── COMBO FLASH ───── */
+  #combo-flash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+    color: var(--yellow);
+    text-shadow: 0 0 20px var(--yellow), 3px 3px 0 #92400e;
+    pointer-events: none;
+    z-index: 40;
+    opacity: 0;
+    transition: opacity 0.1s;
+  }
+  #combo-flash.pop {
+    opacity: 1;
+    animation: comboPop 0.6s forwards;
+  }
+  @keyframes comboPop {
+    0%   { transform: translate(-50%,-50%) scale(0.5); opacity:1; }
+    50%  { transform: translate(-50%,-60%) scale(1.3); opacity:1; }
+    100% { transform: translate(-50%,-70%) scale(1); opacity:0; }
+  }
+
+  /* responsive */
+  @media(max-width:500px) {
+    .capy-wrap:nth-child(1) svg { width: 80px; }
+    .capy-wrap:nth-child(2) svg { width: 95px; }
+    .capy-wrap:nth-child(3) svg { width: 80px; }
+    #dance-floor { gap: 16px; }
+  }
+</style>
 </head>
 <body>
 
-    <!-- The Interactive Physics Canvas -->
-    <canvas id="canvas"></canvas>
+<div id="scene">
+  <!-- SKY -->
+  <div id="sky"></div>
+  <div id="stars"></div>
+  <div id="moon"></div>
 
-    <!-- The Floating Card -->
-    <div class="card-container" id="cardBox">
-        <div class="cute-card" id="tiltCard">
-            <h1>Prapti</h1>
-            <p>You make the world as sweet and warm as a perfect peach. Tap or drag your finger for a surprise!</p>
-            <button class="magic-btn" id="btn">Touch Here 🍑</button>
-            <div class="secret-message" id="msg">
-                You are absolutely beautiful inside and out, Prapti! Keep shining your lovely light everywhere you go. ✨💖
-            </div>
-        </div>
+  <!-- DISCO LIGHTS -->
+  <div class="disco" id="disco"></div>
+
+  <!-- JUNGLE FAR -->
+  <div id="jungle-far">
+    <svg viewBox="0 0 1400 500" preserveAspectRatio="none" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="leafGrad1" cx="50%" cy="0%" r="80%">
+          <stop offset="0%" stop-color="#1a6b3a"/>
+          <stop offset="100%" stop-color="#0a3520"/>
+        </radialGradient>
+        <radialGradient id="leafGrad2" cx="50%" cy="0%" r="80%">
+          <stop offset="0%" stop-color="#22804a"/>
+          <stop offset="100%" stop-color="#103d25"/>
+        </radialGradient>
+      </defs>
+      <!-- Big background trees -->
+      <ellipse cx="100" cy="320" rx="90" ry="200" fill="url(#leafGrad1)" opacity=".7"/>
+      <ellipse cx="250" cy="280" rx="110" ry="230" fill="url(#leafGrad2)" opacity=".6"/>
+      <ellipse cx="450" cy="300" rx="95" ry="210" fill="url(#leafGrad1)" opacity=".7"/>
+      <ellipse cx="650" cy="260" rx="120" ry="250" fill="url(#leafGrad2)" opacity=".65"/>
+      <ellipse cx="850" cy="290" rx="100" ry="220" fill="url(#leafGrad1)" opacity=".7"/>
+      <ellipse cx="1050" cy="270" rx="115" ry="240" fill="url(#leafGrad2)" opacity=".6"/>
+      <ellipse cx="1250" cy="300" rx="90" ry="210" fill="url(#leafGrad1)" opacity=".7"/>
+      <ellipse cx="1380" cy="330" rx="80" ry="190" fill="url(#leafGrad2)" opacity=".65"/>
+      <!-- Trunks -->
+      <rect x="90" y="380" width="20" height="120" fill="#2d1b0e" rx="5"/>
+      <rect x="240" y="360" width="24" height="140" fill="#3d2510" rx="5"/>
+      <rect x="440" y="370" width="22" height="130" fill="#2d1b0e" rx="5"/>
+      <rect x="640" y="340" width="26" height="160" fill="#3d2510" rx="5"/>
+      <rect x="840" y="355" width="23" height="145" fill="#2d1b0e" rx="5"/>
+      <rect x="1040" y="345" width="25" height="155" fill="#3d2510" rx="5"/>
+      <rect x="1240" y="365" width="21" height="135" fill="#2d1b0e" rx="5"/>
+    </svg>
+  </div>
+
+  <!-- JUNGLE MID -->
+  <div id="jungle-mid">
+    <svg viewBox="0 0 1400 400" preserveAspectRatio="none" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="mg1" cx="50%" cy="10%" r="80%">
+          <stop offset="0%" stop-color="#28a058"/>
+          <stop offset="100%" stop-color="#0e4a28"/>
+        </radialGradient>
+        <radialGradient id="mg2" cx="50%" cy="10%" r="80%">
+          <stop offset="0%" stop-color="#34c068"/>
+          <stop offset="100%" stop-color="#165c32"/>
+        </radialGradient>
+      </defs>
+      <!-- Mid-layer tropical leaves -->
+      <ellipse cx="50"  cy="300" rx="75"  ry="160" fill="url(#mg1)" opacity=".85"/>
+      <ellipse cx="190" cy="260" rx="85"  ry="180" fill="url(#mg2)" opacity=".8"/>
+      <ellipse cx="370" cy="275" rx="80"  ry="170" fill="url(#mg1)" opacity=".85"/>
+      <ellipse cx="560" cy="245" rx="90"  ry="195" fill="url(#mg2)" opacity=".8"/>
+      <ellipse cx="760" cy="265" rx="82"  ry="175" fill="url(#mg1)" opacity=".85"/>
+      <ellipse cx="960" cy="250" rx="88"  ry="185" fill="url(#mg2)" opacity=".8"/>
+      <ellipse cx="1160" cy="270" rx="80" ry="172" fill="url(#mg1)" opacity=".85"/>
+      <ellipse cx="1350" cy="290" rx="75" ry="162" fill="url(#mg2)" opacity=".8"/>
+      <!-- Tropical palm-like fronds -->
+      <path d="M200 400 Q180 300 120 250 Q200 270 200 400" fill="#1e7a40" opacity=".7"/>
+      <path d="M200 400 Q220 290 280 240 Q200 275 200 400" fill="#25954d" opacity=".7"/>
+      <path d="M700 400 Q680 300 620 255 Q700 270 700 400" fill="#1e7a40" opacity=".7"/>
+      <path d="M700 400 Q720 290 780 240 Q700 275 700 400" fill="#25954d" opacity=".7"/>
+      <path d="M1100 400 Q1080 305 1020 258 Q1100 272 1100 400" fill="#1e7a40" opacity=".7"/>
+      <path d="M1100 400 Q1120 293 1178 243 Q1100 277 1100 400" fill="#25954d" opacity=".7"/>
+      <!-- Trunks -->
+      <rect x="183" y="360" width="16" height="40" fill="#3d2510" rx="4"/>
+      <rect x="383" y="355" width="18" height="45" fill="#2d1b0e" rx="4"/>
+      <rect x="683" y="345" width="20" height="55" fill="#3d2510" rx="4"/>
+      <rect x="1083" y="355" width="17" height="45" fill="#2d1b0e" rx="4"/>
+    </svg>
+  </div>
+
+  <!-- JUNGLE NEAR (foreground) -->
+  <div id="jungle-near">
+    <svg viewBox="0 0 1400 260" preserveAspectRatio="none" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="near1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3dd674"/>
+          <stop offset="100%" stop-color="#0d4020"/>
+        </linearGradient>
+        <linearGradient id="near2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4ade80"/>
+          <stop offset="100%" stop-color="#14532d"/>
+        </linearGradient>
+      </defs>
+      <!-- Big overlapping leaves -->
+      <ellipse cx="0"    cy="200" rx="120" ry="130" fill="url(#near1)" opacity=".95"/>
+      <ellipse cx="160"  cy="180" rx="130" ry="150" fill="url(#near2)" opacity=".9"/>
+      <ellipse cx="370"  cy="210" rx="110" ry="120" fill="url(#near1)" opacity=".95"/>
+      <ellipse cx="550"  cy="185" rx="140" ry="160" fill="url(#near2)" opacity=".9"/>
+      <ellipse cx="760"  cy="200" rx="125" ry="140" fill="url(#near1)" opacity=".95"/>
+      <ellipse cx="980"  cy="190" rx="135" ry="155" fill="url(#near2)" opacity=".9"/>
+      <ellipse cx="1200" cy="205" rx="120" ry="130" fill="url(#near1)" opacity=".95"/>
+      <ellipse cx="1400" cy="195" rx="115" ry="125" fill="url(#near2)" opacity=".9"/>
+      <!-- Giant leaf shapes -->
+      <path d="M0 260 Q30 160 80 100 Q60 180 0 260" fill="#2da856" opacity=".8"/>
+      <path d="M300 260 Q330 150 390 90 Q360 170 300 260" fill="#38c46a" opacity=".75"/>
+      <path d="M700 260 Q740 145 800 85 Q765 168 700 260" fill="#2da856" opacity=".8"/>
+      <path d="M1050 260 Q1085 148 1145 88 Q1110 168 1050 260" fill="#38c46a" opacity=".75"/>
+      <path d="M1380 260 Q1360 155 1310 100 Q1340 172 1380 260" fill="#2da856" opacity=".8"/>
+      <!-- Exotic flowers -->
+      <circle cx="170"  cy="160" r="7" fill="#f472b6" opacity=".9"/>
+      <circle cx="560"  cy="150" r="8" fill="#f472b6" opacity=".9"/>
+      <circle cx="990"  cy="158" r="7" fill="#f472b6" opacity=".9"/>
+      <circle cx="170"  cy="160" r="14" fill="none" stroke="#f472b6" stroke-width="2" opacity=".5"/>
+      <circle cx="560"  cy="150" r="16" fill="none" stroke="#f472b6" stroke-width="2" opacity=".5"/>
+      <circle cx="990"  cy="158" r="14" fill="none" stroke="#f472b6" stroke-width="2" opacity=".5"/>
+    </svg>
+  </div>
+
+  <!-- GROUND -->
+  <div id="ground"></div>
+
+  <!-- DANCE FLOOR -->
+  <div id="dance-floor" role="main">
+
+    <!-- CAPY 1 – Pink bow -->
+    <div class="capy-wrap" onclick="capyClick(event, 0)">
+      <div class="capy-label">♪ CHIKA ♪</div>
+      <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <ellipse cx="80" cy="100" rx="55" ry="42" fill="#c8a26b"/>
+        <ellipse cx="80" cy="95" rx="50" ry="38" fill="#d4ae7a"/>
+        <!-- Belly -->
+        <ellipse cx="80" cy="108" rx="32" ry="24" fill="#e8c99a"/>
+        <!-- Head -->
+        <ellipse cx="80" cy="62" rx="40" ry="35" fill="#c8a26b"/>
+        <ellipse cx="80" cy="58" rx="37" ry="32" fill="#d4ae7a"/>
+        <!-- Snout -->
+        <ellipse cx="80" cy="76" rx="20" ry="14" fill="#c8a26b"/>
+        <ellipse cx="80" cy="74" rx="18" ry="12" fill="#d4ae7a"/>
+        <!-- Nostrils -->
+        <ellipse cx="74" cy="76" rx="3" ry="2.5" fill="#8b6914"/>
+        <ellipse cx="86" cy="76" rx="3" ry="2.5" fill="#8b6914"/>
+        <!-- Eyes – big anime -->
+        <ellipse cx="65" cy="54" rx="12" ry="14" fill="white"/>
+        <ellipse cx="95" cy="54" rx="12" ry="14" fill="white"/>
+        <ellipse cx="67" cy="55" rx="8" ry="10" fill="#4a2c00"/>
+        <ellipse cx="97" cy="55" rx="8" ry="10" fill="#4a2c00"/>
+        <ellipse cx="69" cy="53" rx="5" ry="6"  fill="#1a0a00"/>
+        <ellipse cx="99" cy="53" rx="5" ry="6"  fill="#1a0a00"/>
+        <!-- Shine dots -->
+        <circle cx="71" cy="51" r="2.5" fill="white"/>
+        <circle cx="101" cy="51" r="2.5" fill="white"/>
+        <circle cx="72" cy="57" r="1.2" fill="white"/>
+        <circle cx="102" cy="57" r="1.2" fill="white"/>
+        <!-- Blush -->
+        <ellipse cx="55" cy="65" rx="9" ry="5" fill="#f472b6" opacity=".45"/>
+        <ellipse cx="105" cy="65" rx="9" ry="5" fill="#f472b6" opacity=".45"/>
+        <!-- Smile -->
+        <path d="M70 82 Q80 90 90 82" stroke="#8b6914" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Ears -->
+        <ellipse cx="44" cy="32" rx="14" ry="18" fill="#c8a26b"/>
+        <ellipse cx="44" cy="32" rx="9" ry="13" fill="#e8a0b0"/>
+        <ellipse cx="116" cy="32" rx="14" ry="18" fill="#c8a26b"/>
+        <ellipse cx="116" cy="32" rx="9" ry="13" fill="#e8a0b0"/>
+        <!-- Pink bow -->
+        <path d="M72 18 Q76 10 80 14 Q84 10 88 18 Q80 22 72 18Z" fill="#f472b6"/>
+        <path d="M72 18 Q76 28 80 24 Q84 28 88 18 Q80 14 72 18Z" fill="#ec4899"/>
+        <circle cx="80" cy="18" r="4" fill="#fce7f3"/>
+        <!-- Arms (up dancing) -->
+        <ellipse cx="28" cy="95" rx="12" ry="8" fill="#c8a26b" transform="rotate(-40 28 95)"/>
+        <ellipse cx="132" cy="80" rx="12" ry="8" fill="#c8a26b" transform="rotate(50 132 80)"/>
+        <!-- Legs -->
+        <ellipse cx="60" cy="136" rx="14" ry="9" fill="#b8924a"/>
+        <ellipse cx="100" cy="136" rx="14" ry="9" fill="#b8924a"/>
+        <ellipse cx="60" cy="141" rx="12" ry="7" fill="#a07838"/>
+        <ellipse cx="100" cy="141" rx="12" ry="7" fill="#a07838"/>
+        <!-- Tail -->
+        <ellipse cx="130" cy="108" rx="10" ry="8" fill="#b8924a"/>
+        <!-- Star accessories -->
+        <text x="18" y="75" font-size="14" fill="#fde68a">★</text>
+        <text x="128" y="62" font-size="12" fill="#fde68a">✦</text>
+      </svg>
     </div>
 
-    <script>
-        // Helper function for Haptic Feedback (Vibration)
-        function vibrate(pattern) {
-            if (navigator.vibrate) {
-                navigator.vibrate(pattern);
-            }
-        }
+    <!-- CAPY 2 – Crown (biggest, center) -->
+    <div class="capy-wrap" onclick="capyClick(event, 1)">
+      <div class="capy-label">♪ KAPY ♪</div>
+      <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+        <!-- Crown -->
+        <polygon points="55,18 68,2 80,12 92,2 105,18 100,26 60,26" fill="#f59e0b"/>
+        <polygon points="68,2 80,12 92,2 88,22 72,22" fill="#fde68a"/>
+        <circle cx="80" cy="14" r="4" fill="#ef4444"/>
+        <circle cx="62" cy="22" r="3" fill="#3b82f6"/>
+        <circle cx="98" cy="22" r="3" fill="#3b82f6"/>
+        <!-- Body -->
+        <ellipse cx="80" cy="112" rx="58" ry="44" fill="#c8a26b"/>
+        <ellipse cx="80" cy="107" rx="52" ry="40" fill="#d4ae7a"/>
+        <!-- Belly -->
+        <ellipse cx="80" cy="120" rx="34" ry="26" fill="#e8c99a"/>
+        <!-- Head -->
+        <ellipse cx="80" cy="68" rx="42" ry="37" fill="#c8a26b"/>
+        <ellipse cx="80" cy="63" rx="38" ry="33" fill="#d4ae7a"/>
+        <!-- Snout -->
+        <ellipse cx="80" cy="82" rx="22" ry="15" fill="#c8a26b"/>
+        <ellipse cx="80" cy="80" rx="20" ry="13" fill="#d4ae7a"/>
+        <ellipse cx="73" cy="82" rx="3.5" ry="3" fill="#8b6914"/>
+        <ellipse cx="87" cy="82" rx="3.5" ry="3" fill="#8b6914"/>
+        <!-- Big anime eyes -->
+        <ellipse cx="63" cy="59" rx="14" ry="16" fill="white"/>
+        <ellipse cx="97" cy="59" rx="14" ry="16" fill="white"/>
+        <ellipse cx="65" cy="60" rx="9.5" ry="11" fill="#6b3d00"/>
+        <ellipse cx="99" cy="60" rx="9.5" ry="11" fill="#6b3d00"/>
+        <ellipse cx="66" cy="58" rx="6" ry="7" fill="#1a0a00"/>
+        <ellipse cx="100" cy="58" rx="6" ry="7" fill="#1a0a00"/>
+        <circle cx="68" cy="55" r="3"   fill="white"/>
+        <circle cx="102" cy="55" r="3"  fill="white"/>
+        <circle cx="70" cy="63" r="1.5" fill="white"/>
+        <circle cx="104" cy="63" r="1.5" fill="white"/>
+        <!-- Blush -->
+        <ellipse cx="50" cy="70" rx="10" ry="6" fill="#f472b6" opacity=".4"/>
+        <ellipse cx="110" cy="70" rx="10" ry="6" fill="#f472b6" opacity=".4"/>
+        <!-- Happy open mouth -->
+        <path d="M67 90 Q80 102 93 90" stroke="#8b6914" stroke-width="3" fill="#d97706" stroke-linecap="round"/>
+        <ellipse cx="80" cy="94" rx="10" ry="7" fill="#d97706"/>
+        <ellipse cx="80" cy="92" rx="7" ry="4" fill="#fca5a5"/>
+        <!-- Ears -->
+        <ellipse cx="42" cy="36" rx="15" ry="20" fill="#c8a26b"/>
+        <ellipse cx="42" cy="36" rx="10" ry="14" fill="#e8a0b0"/>
+        <ellipse cx="118" cy="36" rx="15" ry="20" fill="#c8a26b"/>
+        <ellipse cx="118" cy="36" rx="10" ry="14" fill="#e8a0b0"/>
+        <!-- Arms raised high -->
+        <ellipse cx="22" cy="100" rx="14" ry="9" fill="#c8a26b" transform="rotate(-55 22 100)"/>
+        <ellipse cx="138" cy="100" rx="14" ry="9" fill="#c8a26b" transform="rotate(55 138 100)"/>
+        <!-- Legs -->
+        <ellipse cx="62" cy="148" rx="15" ry="10" fill="#b8924a"/>
+        <ellipse cx="98" cy="148" rx="15" ry="10" fill="#b8924a"/>
+        <ellipse cx="62" cy="154" rx="13" ry="7" fill="#a07838"/>
+        <ellipse cx="98" cy="154" rx="13" ry="7" fill="#a07838"/>
+        <!-- Tail -->
+        <ellipse cx="132" cy="118" rx="11" ry="9" fill="#b8924a"/>
+        <!-- Scarf -->
+        <path d="M50 88 Q80 96 110 88 Q108 104 80 108 Q52 104 50 88Z" fill="#f472b6" opacity=".85"/>
+        <path d="M100 95 Q108 110 95 122" stroke="#f472b6" stroke-width="8" fill="none" stroke-linecap="round" opacity=".85"/>
+        <!-- Music note belt buckle area -->
+        <text x="70" y="130" font-size="16" fill="#fde68a">♫</text>
+      </svg>
+    </div>
 
-        /* --- 1. 3D Card Hover & Touch Tilt --- */
-        const tiltCard = document.getElementById('tiltCard');
-        
-        function handleTilt(x, y) {
-            let xAxis = (window.innerWidth / 2 - x) / 30;
-            let yAxis = (window.innerHeight / 2 - y) / 30;
-            tiltCard.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        }
+    <!-- CAPY 3 – Sunglasses -->
+    <div class="capy-wrap" onclick="capyClick(event, 2)">
+      <div class="capy-label">♪ YUKI ♪</div>
+      <svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Body -->
+        <ellipse cx="80" cy="100" rx="55" ry="42" fill="#c8a26b"/>
+        <ellipse cx="80" cy="95" rx="50" ry="38" fill="#d4ae7a"/>
+        <!-- Belly -->
+        <ellipse cx="80" cy="108" rx="32" ry="24" fill="#e8c99a"/>
+        <!-- Head -->
+        <ellipse cx="80" cy="62" rx="40" ry="35" fill="#c8a26b"/>
+        <ellipse cx="80" cy="58" rx="37" ry="32" fill="#d4ae7a"/>
+        <!-- Snout -->
+        <ellipse cx="80" cy="76" rx="20" ry="14" fill="#c8a26b"/>
+        <ellipse cx="80" cy="74" rx="18" ry="12" fill="#d4ae7a"/>
+        <ellipse cx="74" cy="76" rx="3" ry="2.5" fill="#8b6914"/>
+        <ellipse cx="86" cy="76" rx="3" ry="2.5" fill="#8b6914"/>
+        <!-- Cool sunglasses -->
+        <rect x="50" y="46" width="26" height="18" rx="9" fill="#1a1a2e" opacity=".92"/>
+        <rect x="84" y="46" width="26" height="18" rx="9" fill="#1a1a2e" opacity=".92"/>
+        <line x1="76" y1="55" x2="84" y2="55" stroke="#555" stroke-width="2.5"/>
+        <!-- Lens shine -->
+        <ellipse cx="57" cy="50" rx="5" ry="3" fill="white" opacity=".25"/>
+        <ellipse cx="91" cy="50" rx="5" ry="3" fill="white" opacity=".25"/>
+        <!-- Frame sides -->
+        <line x1="50" y1="55" x2="42" y2="53" stroke="#1a1a2e" stroke-width="3"/>
+        <line x1="110" y1="55" x2="118" y2="53" stroke="#1a1a2e" stroke-width="3"/>
+        <!-- Blush visible below glasses -->
+        <ellipse cx="55" cy="67" rx="9" ry="5" fill="#f472b6" opacity=".4"/>
+        <ellipse cx="105" cy="67" rx="9" ry="5" fill="#f472b6" opacity=".4"/>
+        <!-- Smirk smile -->
+        <path d="M70 82 Q82 91 90 84" stroke="#8b6914" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Ears -->
+        <ellipse cx="44" cy="32" rx="14" ry="18" fill="#c8a26b"/>
+        <ellipse cx="44" cy="32" rx="9" ry="13" fill="#e8a0b0"/>
+        <ellipse cx="116" cy="32" rx="14" ry="18" fill="#c8a26b"/>
+        <ellipse cx="116" cy="32" rx="9" ry="13" fill="#e8a0b0"/>
+        <!-- Headphones on ears -->
+        <path d="M36 38 Q30 20 50 16 Q72 10 80 18 Q88 10 110 16 Q130 20 124 38" stroke="#38b2ac" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <rect x="28" y="34" width="14" height="20" rx="7" fill="#38b2ac"/>
+        <rect x="118" y="34" width="14" height="20" rx="7" fill="#38b2ac"/>
+        <!-- Arms dancing sideways -->
+        <ellipse cx="26" cy="88" rx="13" ry="8" fill="#c8a26b" transform="rotate(-30 26 88)"/>
+        <ellipse cx="134" cy="88" rx="13" ry="8" fill="#c8a26b" transform="rotate(30 134 88)"/>
+        <!-- Legs -->
+        <ellipse cx="60" cy="136" rx="14" ry="9" fill="#b8924a"/>
+        <ellipse cx="100" cy="136" rx="14" ry="9" fill="#b8924a"/>
+        <ellipse cx="60" cy="141" rx="12" ry="7" fill="#a07838"/>
+        <ellipse cx="100" cy="141" rx="12" ry="7" fill="#a07838"/>
+        <!-- Tail -->
+        <ellipse cx="130" cy="108" rx="10" ry="8" fill="#b8924a"/>
+        <!-- Lightning bolt accessory -->
+        <text x="16" y="80" font-size="16" fill="#fde68a">⚡</text>
+      </svg>
+    </div>
 
-        // For Desktop
-        document.addEventListener('mousemove', (e) => handleTilt(e.clientX, e.clientY));
-        
-        // For Mobile Dragging
-        document.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            handleTilt(touch.clientX, touch.clientY);
-        }, { passive: true });
+  </div><!-- /dance-floor -->
 
-        // Reset tilt on release
-        document.addEventListener('touchend', () => {
-            tiltCard.style.transform = `translateZ(50px) rotateY(0deg) rotateX(0deg)`;
-        });
-        document.addEventListener('mouseleave', () => {
-            tiltCard.style.transform = `translateZ(50px) rotateY(0deg) rotateX(0deg)`;
-        });
+  <!-- FIREFLIES container -->
+  <div id="fireflies"></div>
 
-        /* --- 2. Button Interaction --- */
-        const btn = document.getElementById('btn');
-        const msg = document.getElementById('msg');
+  <!-- PLAY SCREEN -->
+  <div id="play-screen">
+    <div class="title-text">🌿 CAPYBARA<br>DANCE PARTY 🌿</div>
+    <div class="subtitle">~ anime jungle edition ~</div>
+    <button id="play-btn" onclick="startParty()" aria-label="Start the party">▶</button>
+    <div class="subtitle" style="font-size:0.9rem; opacity:0.6; margin-top:8px;">tap to dance!</div>
+  </div>
 
-        // Works for both clicks and mobile taps
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation(); 
-            msg.classList.toggle('reveal');
-            
-            if (msg.classList.contains('reveal')) {
-                btn.innerText = "So Beautiful! ✨";
-                createExplosion(window.innerWidth / 2, window.innerHeight / 2, 80, true);
-                vibrate([50, 100, 150]); // Fun haptic pattern for the big reveal!
-            } else {
-                btn.innerText = "Touch Here 🍑";
-                vibrate(30);
-            }
-        });
+  <!-- SCORE BADGE -->
+  <div id="score-badge">🌿 COMBO: <span id="score">0</span></div>
 
-        /* --- 3. Bouncy Canvas Physics Engine --- */
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        let width, height;
-        let particles = [];
-        
-        const cuteItems = ['🍑', '💖', '✨', '🌸', '🎀', '⭐'];
+  <!-- COMBO FLASH -->
+  <div id="combo-flash"></div>
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+  <!-- CONTROLS -->
+  <div id="controls">
+    <button class="ctrl-btn" onclick="toggleMusic()" id="mute-btn" title="Toggle music">🔊</button>
+    <button class="ctrl-btn" onclick="toggleDisco()" title="Toggle disco">🪩</button>
+  </div>
 
-        class Particle {
-            constructor(x, y, isExplosion = false, isSuper = false) {
-                this.x = x;
-                this.y = y;
-                this.item = cuteItems[Math.floor(Math.random() * cuteItems.length)];
-                this.size = Math.random() * 20 + 15;
-                
-                if (isSuper) this.size *= 1.5; 
-                
-                if (isExplosion) {
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = Math.random() * (isSuper ? 20 : 12) + 5;
-                    this.vx = Math.cos(angle) * speed;
-                    this.vy = Math.sin(angle) * speed;
-                    this.gravity = 0.6; // Pulls them down a bit faster for mobile
-                    this.life = 1;
-                    this.decay = Math.random() * 0.01 + 0.005;
-                    this.bounciness = Math.random() * 0.4 + 0.4;
-                } else {
-                    this.vx = (Math.random() - 0.5) * 2;
-                    this.vy = (Math.random() - 0.5) * 2 - 1;
-                    this.gravity = -0.05;
-                    this.life = 1;
-                    this.decay = Math.random() * 0.05 + 0.02; // Fade a bit faster on trail
-                    this.bounciness = 0;
-                }
-                
-                this.rotation = Math.random() * 360;
-                this.rotSpeed = (Math.random() - 0.5) * 15;
-            }
+  <!-- NOW PLAYING -->
+  <div id="now-playing">
+    <span class="np-dot"></span>
+    <div class="np-bars" id="np-bars"></div>
+    <span>♪ Jungle Groove — Free Music</span>
+  </div>
 
-            update() {
-                this.vy += this.gravity;
-                this.x += this.vx;
-                this.y += this.vy;
-                this.rotation += this.rotSpeed;
-                this.life -= this.decay;
+</div><!-- /scene -->
 
-                if (this.y > height - this.size && this.bounciness > 0) {
-                    this.y = height - this.size;
-                    this.vy *= -this.bounciness;
-                    this.vx *= 0.8;
-                }
-            }
+<!-- Audio: free/non-copyright upbeat track via free CDN proxy -->
+<audio id="bgm" loop preload="auto">
+  <!-- Upbeat royalty-free track from Pixabay CDN (free, no attribution required) -->
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_946b39d9e1.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/06/audio_bc7cd2e2d3.mp3" type="audio/mpeg">
+</audio>
 
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation * Math.PI / 180);
-                ctx.globalAlpha = Math.max(0, this.life);
-                ctx.font = `${this.size}px Arial`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(this.item, 0, 0);
-                ctx.restore();
-            }
-        }
+<script>
+// ─── STATE ───
+let partyStarted = false;
+let musicMuted = false;
+let discoOn = true;
+let score = 0;
+let combo = 0;
+const comboMessages = ['NICE!','GROOVY!','🔥 HOT!','💫 COMBO!','🌟 AMAZING!','✨ INSANE!','🎉 CAPYBARA GOD!'];
 
-        function createExplosion(x, y, amount, isSuper = false) {
-            for (let i = 0; i < amount; i++) {
-                particles.push(new Particle(x, y, true, isSuper));
-            }
-        }
+const audio = document.getElementById('bgm');
+audio.volume = 0.55;
 
-        // Add trail on mouse move (Desktop)
-        window.addEventListener('mousemove', (e) => {
-            if (Math.random() > 0.6) {
-                particles.push(new Particle(e.clientX, e.clientY, false));
-            }
-        });
+// ─── STARS ───
+(function makeStars() {
+  const c = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.8;
+    s.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${Math.random()*55}%;
+      width:${sz}px; height:${sz}px;
+      --d:${1.5 + Math.random()*3}s;
+      animation-delay:${Math.random()*4}s;
+    `;
+    c.appendChild(s);
+  }
+})();
 
-        // Add trail on finger drag (Mobile) - handles multiple fingers!
-        window.addEventListener('touchmove', (e) => {
-            for(let i = 0; i < e.touches.length; i++) {
-                if (Math.random() > 0.4) {
-                    particles.push(new Particle(e.touches[i].clientX, e.touches[i].clientY, false));
-                }
-            }
-        }, { passive: true });
+// ─── FIREFLIES ───
+(function makeFireflies() {
+  const c = document.getElementById('fireflies');
+  for (let i = 0; i < 22; i++) {
+    const f = document.createElement('div');
+    f.className = 'firefly';
+    const x1 = (Math.random()-0.5)*200, y1 = (Math.random()-0.5)*120;
+    const x2 = (Math.random()-0.5)*300, y2 = (Math.random()-0.5)*180;
+    f.style.cssText = `
+      left:${10+Math.random()*80}%;
+      top:${20+Math.random()*60}%;
+      --fd:${4+Math.random()*6}s;
+      --fd2:${Math.random()*5}s;
+      --fx:${x1}px; --fy:${y1}px;
+      --fx2:${x2}px; --fy2:${y2}px;
+    `;
+    c.appendChild(f);
+  }
+})();
 
-        // Explosions for clicks/taps on background
-        const handleBackgroundTap = (x, y, target) => {
-            if (target.id !== 'btn') {
-                createExplosion(x, y, 20);
-                vibrate(20); // Small haptic bump on tap
-            }
-        };
+// ─── DISCO RAYS ───
+(function makeDisco() {
+  const c = document.getElementById('disco');
+  const colors = ['#f472b6','#38b2ac','#a78bfa','#fde68a','#34d399','#f87171','#60a5fa'];
+  for (let i = 0; i < 14; i++) {
+    const r = document.createElement('div');
+    r.className = 'disco-ray';
+    const angle = -80 + (i / 13) * 160;
+    r.style.cssText = `
+      left:${50+Math.sin(i)*15}%;
+      background:${colors[i%colors.length]};
+      height:${60+Math.random()*30}vh;
+      transform:rotate(${angle}deg);
+      --rs:${1.5+Math.random()*2}s;
+      --ra:${angle + (Math.random()-0.5)*30}deg;
+      animation-delay:${Math.random()*2}s;
+    `;
+    c.appendChild(r);
+  }
+})();
 
-        window.addEventListener('click', (e) => handleBackgroundTap(e.clientX, e.clientY, e.target));
-        
-        // Specific touchstart for faster response on mobile
-        window.addEventListener('touchstart', (e) => {
-            for(let i = 0; i < e.changedTouches.length; i++) {
-                handleBackgroundTap(e.changedTouches[i].clientX, e.changedTouches[i].clientY, e.target);
-            }
-        }, { passive: true });
+// ─── EQ BARS ───
+(function makeBars() {
+  const c = document.getElementById('np-bars');
+  for (let i = 0; i < 5; i++) {
+    const b = document.createElement('div');
+    b.className = 'np-bar';
+    const h = 4 + Math.random()*12;
+    b.style.cssText = `height:${h}px; --bb:${0.3+Math.random()*0.4}s; --bh:${4+Math.random()*14}px;`;
+    c.appendChild(b);
+  }
+})();
 
-        // Loop the magic
-        function animate() {
-            ctx.fillStyle = 'rgba(255, 236, 210, 0.4)';
-            ctx.fillRect(0, 0, width, height);
+// ─── START PARTY ───
+function startParty() {
+  if (partyStarted) return;
+  partyStarted = true;
 
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].update();
-                particles[i].draw();
-                
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                }
-            }
-            requestAnimationFrame(animate);
-        }
+  // hide play screen
+  const ps = document.getElementById('play-screen');
+  ps.classList.add('hidden');
 
-        animate();
-    </script>
+  // show sky party mode
+  document.getElementById('sky').classList.add('party');
+
+  // show capybaras
+  const df = document.getElementById('dance-floor');
+  df.classList.add('show');
+
+  // start music with a little delay
+  setTimeout(() => {
+    audio.play().catch(() => {
+      // autoplay blocked — show a note
+    });
+    df.classList.add('dancing');
+  }, 800);
+
+  // enable disco
+  document.getElementById('disco').classList.add('active');
+
+  // show controls & now-playing
+  setTimeout(() => {
+    document.getElementById('controls').classList.add('show');
+    document.getElementById('now-playing').classList.add('show');
+    document.getElementById('score-badge').classList.add('show');
+  }, 1200);
+
+  // continuous music note emitters
+  setInterval(spawnNote, 700);
+  // sparkles on beat
+  setInterval(() => spawnSparkle(Math.random()*window.innerWidth, Math.random()*window.innerHeight*0.6), 1800);
+}
+
+// ─── CAPY CLICK ───
+function capyClick(e, idx) {
+  if (!partyStarted) return;
+  combo++;
+  score += combo * 10;
+  document.getElementById('score').textContent = score;
+
+  // combo flash
+  const cf = document.getElementById('combo-flash');
+  cf.textContent = comboMessages[Math.min(combo-1, comboMessages.length-1)];
+  cf.classList.remove('pop');
+  void cf.offsetWidth;
+  cf.classList.add('pop');
+
+  // burst sparkles from capy
+  const rect = e.currentTarget.getBoundingClientRect();
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => spawnSparkle(rect.left + rect.width/2 + (Math.random()-0.5)*60, rect.top + rect.height/2 + (Math.random()-0.5)*40), i * 80);
+  }
+
+  // ripple
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.cssText = `left:${rect.left+rect.width/2}px; top:${rect.top+rect.height/2}px; width:40px; height:40px;`;
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+
+  // reset combo after pause
+  clearTimeout(window._comboTimer);
+  window._comboTimer = setTimeout(() => { combo = 0; }, 2000);
+}
+
+// background click for extra sparkle
+document.getElementById('scene').addEventListener('click', function(e) {
+  if (!partyStarted) return;
+  if (e.target.closest('.capy-wrap') || e.target.closest('#play-screen') || e.target.closest('#controls')) return;
+  spawnSparkle(e.clientX, e.clientY);
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.cssText = `left:${e.clientX}px; top:${e.clientY}px; width:30px; height:30px; background:rgba(253,230,138,.25);`;
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+});
+
+// ─── SPAWN SPARKLE ───
+const sparkleChars = ['✨','⭐','💫','🌟','🎵','🎶','🌿','💚','🍃','⚡','🔥','🌸'];
+function spawnSparkle(x, y) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.textContent = sparkleChars[Math.floor(Math.random()*sparkleChars.length)];
+  s.style.cssText = `left:${x}px; top:${y}px; transform: translate(-50%,-50%);`;
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 1300);
+}
+
+// ─── SPAWN MUSIC NOTE ───
+const noteChars = ['♪','♫','♬','♩','🎵','🎶'];
+function spawnNote() {
+  if (!partyStarted) return;
+  const n = document.createElement('div');
+  n.className = 'note';
+  n.textContent = noteChars[Math.floor(Math.random()*noteChars.length)];
+  const x = 20 + Math.random()*60;
+  n.style.cssText = `
+    left:${x}%; bottom:120px;
+    color:hsl(${Math.random()*360},80%,75%);
+    --nx:${(Math.random()-0.5)*100}px;
+    --ny:${-80-Math.random()*80}px;
+    --nr:${(Math.random()-0.5)*60}deg;
+  `;
+  document.getElementById('scene').appendChild(n);
+  setTimeout(() => n.remove(), 2600);
+}
+
+// ─── CONTROLS ───
+function toggleMusic() {
+  musicMuted = !musicMuted;
+  audio.muted = musicMuted;
+  document.getElementById('mute-btn').textContent = musicMuted ? '🔇' : '🔊';
+  const df = document.getElementById('dance-floor');
+  musicMuted ? df.classList.remove('dancing') : df.classList.add('dancing');
+}
+function toggleDisco() {
+  discoOn = !discoOn;
+  document.getElementById('disco').classList.toggle('active', discoOn);
+}
+
+// ─── PLAY btn hover wobble ───
+const playBtn = document.getElementById('play-btn');
+playBtn.addEventListener('mouseenter', () => {
+  for(let i=0;i<4;i++) setTimeout(()=>spawnSparkle(
+    playBtn.getBoundingClientRect().left + playBtn.offsetWidth/2 + (Math.random()-0.5)*80,
+    playBtn.getBoundingClientRect().top + playBtn.offsetHeight/2 + (Math.random()-0.5)*80
+  ), i*120);
+});
+</script>
 </body>
 </html>
